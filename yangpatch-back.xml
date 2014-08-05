@@ -1,0 +1,316 @@
+<references title="Normative References">
+
+  <reference anchor="RFC2119">
+    <front>
+      <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+      <author initials="S." surname="Bradner" fullname="S.  Bradner">
+        <organization>Harvard University</organization>
+      </author>
+      <date month="March" year="1997"/>
+      <abstract>
+        <t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized.  This document defines these words as they should be interpreted in IETF documents.</t>
+      </abstract>
+    </front>
+    <seriesInfo name="BCP" value="14"/>
+    <seriesInfo name="RFC" value="2119"/>
+    <format type="TXT" octets="4723" target="ftp://ftp.isi.edu/in-notes/rfc2119.txt"/>
+  </reference>
+
+
+
+<reference anchor="RFC2616">
+
+<front>
+<title abbrev="HTTP/1.1">Hypertext Transfer Protocol -- HTTP/1.1</title>
+<author initials="R." surname="Fielding" fullname="Roy T. Fielding">
+<organization abbrev="UC Irvine">Department of Information and Computer Science</organization>
+<address>
+<postal>
+<street>University of California, Irvine</street>
+<city>Irvine</city>
+<region>CA</region>
+<code>92697-3425</code></postal>
+<facsimile>+1(949)824-1715</facsimile>
+<email>fielding@ics.uci.edu</email></address></author>
+<author initials="J." surname="Gettys" fullname="James Gettys">
+<organization abbrev="Compaq/W3C">World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>jg@w3.org</email></address></author>
+<author initials="J." surname="Mogul" fullname="Jeffrey C. Mogul">
+<organization abbrev="Compaq">Compaq Computer Corporation</organization>
+<address>
+<postal>
+<street>Western Research Laboratory</street>
+<street>250 University Avenue</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94305</code></postal>
+<email>mogul@wrl.dec.com</email></address></author>
+<author initials="H." surname="Frystyk" fullname="Henrik Frystyk Nielsen">
+<organization abbrev="W3C/MIT">World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>frystyk@w3.org</email></address></author>
+<author initials="L." surname="Masinter" fullname="Larry Masinter">
+<organization abbrev="Xerox">Xerox Corporation</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>3333 Coyote Hill Road</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94034</code></postal>
+<email>masinter@parc.xerox.com</email></address></author>
+<author initials="P." surname="Leach" fullname="Paul J. Leach">
+<organization abbrev="Microsoft">Microsoft Corporation</organization>
+<address>
+<postal>
+<street>1 Microsoft Way</street>
+<city>Redmond</city>
+<region>WA</region>
+<code>98052</code></postal>
+<email>paulle@microsoft.com</email></address></author>
+<author initials="T." surname="Berners-Lee" fullname="Tim Berners-Lee">
+<organization abbrev="W3C/MIT">World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>timbl@w3.org</email></address></author>
+<date year="1999" month="June"/>
+<abstract>
+<t>
+   The Hypertext Transfer Protocol (HTTP) is an application-level
+   protocol for distributed, collaborative, hypermedia information
+   systems. It is a generic, stateless, protocol which can be used for
+   many tasks beyond its use for hypertext, such as name servers and
+   distributed object management systems, through extension of its
+   request methods, error codes and headers . A feature of HTTP is
+   the typing and negotiation of data representation, allowing systems
+   to be built independently of the data being transferred.
+</t>
+<t>
+   HTTP has been in use by the World-Wide Web global information
+   initiative since 1990. This specification defines the protocol
+   referred to as "HTTP/1.1", and is an update to RFC 2068 .
+</t></abstract></front>
+
+<seriesInfo name="RFC" value="2616"/>
+<format type="TXT" octets="422317" target="http://www.rfc-editor.org/rfc/rfc2616.txt"/>
+<format type="PS" octets="5529857" target="http://www.rfc-editor.org/rfc/rfc2616.ps"/>
+<format type="PDF" octets="550558" target="http://www.rfc-editor.org/rfc/rfc2616.pdf"/>
+<format type="HTML" octets="636125" target="http://xml.resource.org/public/rfc/html/rfc2616.html"/>
+<format type="XML" octets="493420" target="http://xml.resource.org/public/rfc/xml/rfc2616.xml"/>
+</reference>  
+
+
+  <reference anchor='RFC3688'>
+    <front>
+      <title>The IETF XML Registry</title>
+      <author initials='M.' surname='Mealling' fullname='M. Mealling'>
+	<organization /></author>
+      <date year='2004' month='January' />
+      <abstract>
+	<t>This document describes an IANA maintained registry for IETF standards which use Extensible Markup Language (XML) related items such as Namespaces, Document Type Declarations (DTDs), Schemas, and Resource Description Framework (RDF) Schemas.</t></abstract></front>
+    
+    <seriesInfo name='BCP' value='81' />
+    <seriesInfo name='RFC' value='3688' />
+    <format type='TXT' octets='17325' target='http://www.rfc-editor.org/rfc/rfc3688.txt' />
+  </reference>
+  
+
+
+
+
+<reference anchor="RFC5789">
+
+<front>
+<title>PATCH Method for HTTP</title>
+<author initials="L." surname="Dusseault" fullname="L. Dusseault">
+<organization/></author>
+<author initials="J." surname="Snell" fullname="J. Snell">
+<organization/></author>
+<date year="2010" month="March"/>
+<abstract>
+<t>Several applications extending the Hypertext Transfer Protocol (HTTP) require a feature to do partial resource modification.  The existing HTTP PUT method only allows a complete replacement of a document.  This proposal adds a new HTTP method, PATCH, to modify an existing HTTP resource. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name="RFC" value="5789"/>
+<format type="TXT" octets="21706" target="http://www.rfc-editor.org/rfc/rfc5789.txt"/>
+</reference>
+
+<!--
+<reference anchor='RFC5785'>
+<front>
+<title>Defining Well-Known Uniform Resource Identifiers (URIs)</title>
+<author initials='M.' surname='Nottingham' fullname='M. Nottingham'>
+<organization /></author>
+<author initials='E.' surname='Hammer-Lahav' fullname='E. Hammer-Lahav'>
+<organization /></author>
+<date year='2010' month='April' />
+<abstract>
+<t>This memo defines a path prefix for "well-known locations", "/.well-known/", in selected Uniform Resource Identifier (URI) schemes. [STANDARDS-TRACK]</t></abstract></front>
+<seriesInfo name='RFC' value='5785' />
+<format type='TXT' octets='13779' target='http://www.rfc-editor.org/rfc/rfc5785.txt' />
+</reference>
+-->
+
+  <reference anchor='RFC6241'>
+      <front>
+	<title>Network Configuration Protocol (NETCONF)</title>
+	<author initials='R.' surname='Enns' fullname='R. Enns' role="editor">
+	  <organization/>
+	</author>
+	<author initials='M.' surname='Bjorklund' fullname='M. Bjorklund' role="editor">
+	  <organization/>
+	</author>
+	<author initials='J.' surname='Schoenwaelder' fullname='J. Schoenwaelder' role="editor">
+	  <organization/>
+	</author>
+	<author initials='A.' surname='Bierman' fullname='A. Bierman' role="editor">
+	  <organization/>
+	</author>
+	<date year='2011' month='June'/>
+      </front>
+      <seriesInfo name='RFC' value='6241'/>
+  </reference>
+
+
+  <reference anchor="RFC6020">
+    <front>
+      <title>YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)</title>
+      <author initials="M." surname="Bjorklund" fullname="M. Bjorklund">
+	<organization/>
+      </author>
+      <date year="2010" month="October"/>
+      <abstract>
+	<t>YANG is a data modeling language used to model configuration and state data manipulated by the Network Configuration Protocol (NETCONF), NETCONF remote procedure calls, and NETCONF notifications. [STANDARDS TRACK]</t>
+      </abstract>
+    </front>
+    <seriesInfo name="RFC" value="6020"/>
+    <format type="TXT" octets="324178" target="http://www.rfc-editor.org/rfc/rfc6020.txt"/>
+  </reference>
+
+
+<!--
+<reference anchor="RFC6536">
+
+<front>
+<title>Network Configuration Protocol (NETCONF) Access Control Model</title>
+<author initials="A." surname="Bierman" fullname="A. Bierman">
+<organization/></author>
+<author initials="M." surname="Bjorklund" fullname="M. Bjorklund">
+<organization/></author>
+<date year="2012" month="March"/>
+<abstract>
+<t>The standardization of network configuration interfaces for use with the Network Configuration Protocol (NETCONF) requires a structured and secure operating environment that promotes human usability and multi-vendor interoperability.  There is a need for standard mechanisms to restrict NETCONF protocol access for particular users to a pre-configured subset of all available NETCONF protocol operations and content.  This document defines such an access control model. [STANDARDS-TRACK]</t></abstract></front>
+
+<seriesInfo name="RFC" value="6536"/>
+<format type="TXT" octets="90803" target="http://www.rfc-editor.org/rfc/rfc6536.txt"/>
+</reference>
+-->
+
+
+<reference anchor='RFC6991'>
+
+<front>
+<title>Common YANG Data Types</title>
+<author initials='J.' surname='Schoenwaelder' fullname='J. Schoenwaelder'>
+<organization /></author>
+<date year='2013' month='July' />
+<abstract>
+<t>This document introduces a collection of common data types to be used with the YANG data modeling language.  This document obsoletes RFC 6021.</t></abstract></front>
+
+<seriesInfo name='RFC' value='6991' />
+<format type='TXT' octets='60242' target='http://www.rfc-editor.org/rfc/rfc6991.txt' />
+</reference>
+
+<reference anchor="RESTCONF">
+    <front>
+      <title>RESTCONF Protocol</title>
+      <author initials="A." surname="Bierman" fullname="A. Bierman">
+	<organization>YumaWorks</organization>
+      </author>
+      <author initials="M." surname="Bjorklund" fullname="M. Bjorklund">
+	<organization>Tail-f Systems</organization>
+      </author>
+      <author initials="K." surname="Watsen" fullname="K. Watsen">
+	<organization>Juniper Networks</organization>
+      </author>
+      <author initials="R." surname="Fernando" fullname="R. Fernando">
+	<organization>Cisco</organization>
+      </author>
+      <date year="2014" month="July"/>
+    </front>
+    <seriesInfo name="Internet-Draft"
+                value="draft-ietf-netconf-restconf-01"/>
+    <format type='TXT'
+    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-01.txt'/>
+</reference>
+<!-- END RESTCONF -->
+
+<reference anchor="RFC7158">
+      <front>
+        <title>
+          The JavaScript Object Notation (JSON) Data Interchange Format
+        </title>
+        <author initials="T." surname="Bray"
+                fullname="T. Bray" role="editor">
+          <organization />
+        </author>
+        <date month="March" year="2013" />
+      </front>
+      <seriesInfo name="RFC" value="7158" />
+      <format type="TXT"
+              target="http://www.rfc-editor.org/rfc/rfc7158.txt"/>
+</reference>
+
+<reference anchor='W3C.REC-xml-20081126'
+           target='http://www.w3.org/TR/2008/REC-xml-20081126'>
+<front>
+<title>Extensible Markup Language (XML) 1.0 (Fifth Edition)</title>
+
+<author initials='F.' surname='Yergeau' fullname='François Yergeau'>
+    <organization />
+</author>
+
+<author initials='E.' surname='Maler' fullname='Eve Maler'>
+    <organization />
+</author>
+
+<author initials='J.' surname='Paoli' fullname='Jean Paoli'>
+    <organization />
+</author>
+
+<author initials='C.' surname='Sperberg-McQueen' fullname='C. M. Sperberg-McQueen'>
+    <organization />
+</author>
+
+<author initials='T.' surname='Bray' fullname='Tim Bray'>
+    <organization />
+</author>
+
+<date month='November' day='26' year='2008' />
+</front>
+
+<seriesInfo name='World Wide Web Consortium Recommendation' value='REC-xml-20081126' />
+<format type='HTML' target='http://www.w3.org/TR/2008/REC-xml-20081126' />
+</reference>
+
+</references>

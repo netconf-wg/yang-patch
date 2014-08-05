@@ -1,0 +1,661 @@
+# -*- outline -*-
+
+This document describes a method for applying patches
+to NETCONF datastores using data defined with the YANG
+data modeling language.
+
+* Introduction
+
+There is a need for standard mechanisms to patch NETCONF ^RFC6241^
+datastores which contain conceptual data that conforms to
+schema specified with YANG ^RFC6020^. An "ordered edit list" 
+approach is needed to provide client developers with a simpler
+edit request format that can be more efficient and also allow
+more precise client control of the transaction procedure than
+existing mechanisms.
+
+This document defines a media type for a YANG-based editing
+mechanism that can be used with the HTTP PATCH method ^RFC5789^
+or custom NETCONF operations (defined with the YANG rpc-stmt).
+
+YANG Patch is designed to support multiple protocols
+with the same mechanisms.  The RESTCONF ^RESTCONF^ protocol
+utilizes YANG Patch with the HTTP PATCH method. A new RPC
+operation can be defined to utilize YANG Patch in the NETCONF protocol.
+Both the RESTCONF and NETCONF protocols are designed to utilize the YANG
+data modeling language to specify content schema modules.
+
+** Terminology
+
+The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+"OPTIONAL" in this document are to be interpreted as described in BCP
+14, ^RFC2119^.
+
+*** NETCONF
+
+The following terms are defined in ^RFC6241^:
+
+- candidate configuration datastore
+- client
+- configuration data
+- datastore
+- configuration datastore
+- protocol operation
+- running configuration datastore
+- server
+- startup configuration datastore
+- state data
+- user
+
+*** HTTP
+
+The following terms are defined in ^RFC2616^:
+
+- entity tag
+- fragment
+- header line
+- message body
+- method
+- path
+- query
+- request URI
+- response body
+
+*** YANG
+
+The following terms are defined in ^RFC6020^:
+
+- container
+- data node
+- key leaf
+- leaf
+- leaf-list
+- list
+- presence container (or P-container)
+- RPC operation (now called protocol operation)
+- non-presence container (or NP-container)
+- ordered-by system
+- ordered-by user
+
+*** Terms
+
+The following terms are used within this document:
+
+- YANG Patch: a conceptual edit request using the "yang-patch"
+YANG container, defined in ^module^.
+In HTTP, refers to a PATCH method where the media type
+is "application/yang.patch+xml" or "application/yang.patch+json".
+
+- YANG Patch Status: a conceptual edit status response using
+the YANG "yang-patch-status" container, defined in ^module^.
+In HTTP, refers to a response message for a PATCH method,
+where the message body is identified by the media 
+type "application/yang.patch-status+xml"
+or "application/yang.patch-status+json".
+
+*** Tree Diagrams
+
+A simplified graphical representation of the data model is used in
+this document.  The meaning of the symbols in these
+diagrams is as follows:
+
+- Brackets "[" and "]" enclose list keys.
+- Abbreviations before data node names: "rw" means configuration
+(read-write) and "ro" state data (read-only).
+- Symbols after data node names: "?" means an optional node and "*"
+denotes a "list" and "leaf-list".
+- Parentheses enclose choice and case nodes, and case nodes are also
+marked with a colon (":").
+- Ellipsis ("...") stands for contents of subtrees that are not shown.
+
+* YANG Patch @yang-patch@
+
+A "YANG Patch" is an ordered list of edits that are applied
+to the target datastore by the server. The specific fields
+are defined with the 'yang-patch' container definition in
+the YANG module ^module^.
+
+For RESTCONF, the YANG Patch operation is invoked
+by the client by sending a PATCH method request with
+the YANG Patch media type. A message body representing the
+YANG Patch input parameters MUST be provided.
+
+The RESTCONF server MUST return the Accept-Patch header
+in an OPTIONS response, as specified in ^RFC5789^,
+which includes the media type for YANG Patch. Example:
+
+  Accept-Patch: application/yang.patch, application/yang.data
+
+For NETCONF, a YANG "rpc" statement needs to be defined.
+The "yang-patch" grouping MUST be included in
+the input parameters and the "yang-patch-status" grouping
+MUST be included in the output parameters.
+
+** Target Resource
+
+The YANG Patch operation uses a conceptual root within
+a NETCONF configuration datastore to identity the patch point for
+the edit operation.  This root can be the datastore itself, or
+1 or more data nodes within the datastore.
+
+For RESTCONF, the target resource is derived from the request URI. 
+
+For NETCONF, the target resource MUST be defined as an input
+parameter in the YANG "rpc" statement.
+
+** yang-patch Input
+
+A data element representing the YANG Patch is sent
+by the client to specify the edit operation request.
+When used with the HTTP PATCH method, this data is identified
+by the YANG Patch media type.
+
+YANG Tree Diagram For "yang-patch" Container
+
+   +--rw yang-patch
+      +--rw patch-id?   string
+      +--rw comment?    string
+      +--rw edit [edit-id]
+         +--rw edit-id      string
+         +--rw operation    enumeration
+         +--rw target       target-resource-offset
+         +--rw point?       target-resource-offset
+         +--rw where?       enumeration
+         +--rw value
+
+
+** yang-patch-status Output
+
+A data element representing the YANG Patch Status is returned
+to the client to report the detailed status of the edit operation.
+When used with the HTTP PATCH method, this data is identified
+by the YANG Patch Status media type.
+
+YANG Tree Diagram For "yang-patch-status" Container:
+
+   +--rw yang-patch-status
+      +--rw patch-id?        string
+      +--rw (global-status)?
+      |  +--:(global-errors)
+      |  |  +--ro errors
+      |  |
+      |  +--:(ok)
+      |     +--rw ok?              empty
+      +--rw edit-status
+         +--rw edit [edit-id]
+            +--rw edit-id     string
+            +--rw (edit-status-choice)?
+               +--:(ok)
+               |  +--rw ok?         empty
+               +--:(errors)
+                  +--ro errors
+
+
+** Target Data Node
+
+The target data node for each edit operation is determined
+by the value of the target resource in the request and the
+"target" leaf within each "edit" entry.
+
+If the target resource specified in the request URI identifies
+a datastore resource, then the path string in the "target" leaf
+is an absolute path expression. The first node specified
+in the "target" leaf is a top-level data node defined within
+a YANG module.
+
+If the target resource specified in the request URI identifies
+a data resource, then the path string in the "target" leaf
+is a relative path expression. The first node specified
+in the "target" leaf is a child node of the data node associated
+with the target resource.
+
+** Edit Operations
+
+Each YANG patch edit specifies one edit operation on
+the target data node. The set of operations is aligned
+with the NETCONF edit operations, but also includes
+some new operations.
+
+!! table YANG Patch Edit Operations
+!! head ! Operation   ! Description
+!! row  ! create      ! create a new data resource if it does not already exist or error
+!! row  ! delete      ! delete a data resource if it already exists or error
+!! row  ! insert      ! insert a new user-ordered data resource
+!! row  ! merge       ! merge the edit value with the target data resource; create if it does not already exist
+!! row  ! move        ! re-order the target data resource
+!! row  ! replace     ! replace the target data resource with the edit value
+!! row  ! remove      ! remove a data resource if it already exists or no error
+
+** Error Handling
+
+If a well-formed, schema-valid YANG Patch message is received, then
+then the server will process the supplied edits in ascending order.
+The following error modes apply to the processing of this edit list:
+
+All the specified edits MUST be applied or the
+target datastore contents SHOULD be returned to its original state
+before the PATCH method started.  The server MAY fail to restore
+the contents of the target datastore completely and with certainty.
+It is possible for a rollback to fail or an "undo" operation
+to fail.
+
+The server will save the running datastore to non-volatile storage
+if it has changed, after the edits have been attempted.
+
+* YANG Module @module@
+
+The "ietf-yang-patch" module defines conceptual definitions
+within groupings, which are not meant to be implemented
+as datastore contents by a server.
+
+The "ietf-yang-types" and "ietf-inet_types" modules from ^RFC6991^
+are used by this module for some type definitions.
+
+The "ietf-restconf" module from ^RESTCONF^
+is used by this module for a grouping definition.
+
+RFC Ed.: update the date below with the date of RFC publication and
+remove this note.
+
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2014-07-03.yang"
+
+* IANA Considerations @iana@
+
+** YANG Module Registry
+
+This document registers one URI in the IETF XML registry
+^RFC3688^. Following the format in RFC 3688, the following
+registration is requested to be made.
+
+     URI: urn:ietf:params:xml:ns:yang:ietf-yang-patch
+     Registrant Contact: The NETMOD WG of the IETF.
+     XML: N/A, the requested URI is an XML namespace.
+
+This document registers one YANG module in the YANG Module Names
+registry ^RFC6020^.
+
+  name:         ietf-yang-patch
+  namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-patch
+  prefix:       ypatch
+  // RFC Ed.: replace XXXX with RFC number and remove this note
+  reference:    RFC XXXX
+
+** application/yang.patch Media Types
+
+The MIME media type for a YANG Patch document is application/yang.patch.
+
+   Type name: application
+
+   Subtype name: yang.patch
+
+   Required parameters: TBD
+
+   Optional parameters: TBD
+
+   Encoding considerations: TBD
+
+   Security considerations: TBD
+
+   Interoperability considerations: TBD
+
+   // RFC Ed.: replace XXXX with RFC number and remove this note
+   Published specification: RFC XXXX
+
+** application/yang.patch-status Media Types
+
+The MIME media type for a YANG Patch status
+document is application/yang.patch-status.
+
+   Type name: application
+
+   Subtype name: yang.patch-status
+
+   Required parameters: TBD
+
+   Optional parameters: TBD
+
+   Encoding considerations: TBD
+
+   Security considerations: TBD
+
+   Interoperability considerations: TBD
+
+   // RFC Ed.: replace XXXX with RFC number and remove this note
+   Published specification: RFC XXXX
+
+* Security Considerations
+  
+TBD
+
+*! start-appendix
+
+* Change Log
+
+    -- RFC Ed.: remove this section before publication.  
+
+** bierman:yang-patch-00 to ietf:yang-patch-00
+
+- Created open issues section
+
+** 00 to 01
+
+- Added text requiring support for Accept-Patch header,
+and removed 'Identification of YANG Patch capabilities' open
+issue.
+
+- Removed 'location' leaf from yang-patch-status grouping
+
+- Removed open issue 'Protocol independence' because the
+location leaf was removed.
+
+- Removed open issue 'RESTCONF coupling' because thre is no
+concern about a normative reference to RESTCONF.
+There may need to be a YANG 1.1 mechanism to allow protocol
+template usage (instead of grouping wrapper).
+
+- Removed open issue 'Is the delete operation needed'.
+It was decided that both delete and remove should remain
+as operations and clients can choose which one to use.
+This is not an implementation burden on the server.
+
+- Removed open issue 'global-errors needed'.
+It was decided that they are needed as defined
+because the global <ok/> is needed and the special
+key value for edit=global error only allows for 1 global error.
+
+- Removed open issue 'Is location leaf needed'.
+It was decided that it is not needed so this leaf has been removed.
+
+- Removed open issue 'Bulk editing support in yang-patch-status'.
+The 'location' leaf has been removed so this issue is no longer
+applicable.
+
+- Removed open issue 'Edit list mechanism'.
+Added text to the 'edit' list description-stmt
+about how the individual edits must be processed.
+There is no concern about duplicate edits which cause
+intermediate results to be altered by subsequent edits
+in the same edit list.
+
+* Open Issues
+
+    -- RFC Ed.: remove this section before publication.  
+
+- There are no open issues at this time.
+
+* Example YANG Module
+
+The example YANG module used in this document represents
+a simple media jukebox interface. The "example-jukebox"
+YANG module is defined in ^RESTCONF^.
+
+YANG Tree Diagram for "example-jukebox" Module:
+
+   +--rw jukebox?
+      +--rw library
+      |  +--rw artist [name]
+      |  |  +--rw name     string
+      |  |  +--rw album [name]
+      |  |     +--rw name     string
+      |  |     +--rw genre?   identityref
+      |  |     +--rw year?    uint16
+      |  |     +--rw admin
+      |  |     |  +--rw label?              string
+      |  |     |  +--rw catalogue-number?   string
+      |  |     +--rw song [name]
+      |  |        +--rw name        string
+      |  |        +--rw location    string
+      |  |        +--rw format?     string
+      |  |        +--rw length?     uint32
+      |  +--ro artist-count?   uint32
+      |  +--ro album-count?    uint32
+      |  +--ro song-count?     uint32
+      +--rw playlist [name]
+      |  +--rw name           string
+      |  +--rw description?   string
+      |  +--rw song [index]
+      |     +--rw index    uint32
+      |     +--rw id       instance-identifier
+      +--rw player
+         +--rw gap?   decimal64
+
+  rpcs:
+
+   +---x play    
+      +--ro input     
+         +--ro playlist       string
+         +--ro song-number    uint32
+
+
+** YANG Patch Examples
+
+This section includes RESTCONF examples.
+NETCONF examples are TBD.
+Most examples are shown in JSON encoding ^RFC7158^, and some
+are shown in XML encoding ^W3C.REC-xml-20081126^.
+
+*** Add Resources: Error
+
+The following example shows several songs being added to
+an existing album. Each edit contains one song.
+The first song already exists, so an error will be
+reported for that edit. The rest of the edits were not attempted,
+since the first edit failed.
+
+ Request from client:
+
+   PATCH /restconf/data/example-jukebox:jukebox/
+      library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
+   Host: example.com
+   Accept: application/yang.patch-status+json
+   Content-Type: application/yang.patch+json
+
+   {
+     "ietf-yang-patch:yang-patch" : {
+       "patch-id" : "add-songs-patch",
+       "edit" : [
+         {
+           "edit-id" : 1,
+           "operation" : "create",
+           "target" : "/song",
+           "value" : {
+             "song" : {
+               "name" : "Bridge Burning",
+               "location" : "/media/bridge_burning.mp3",
+               "format" : "MP3",
+               "length" : 288
+             }
+           }
+         },
+         {
+           "edit-id" : 2,
+           "operation" : "create",
+           "target" : "/song",
+           "value" : {
+             "song" : {
+               "name" : "Rope",
+               "location" : "/media/rope.mp3",
+               "format" : "MP3",
+               "length" : 259
+             }
+           }
+         },
+         {
+           "edit-id" : 3,
+           "operation" : "create",
+           "target" : "/song",
+           "value" : {
+             "song" : {
+               "name" : "Dear Rosemary",
+               "location" : "/media/dear_rosemary.mp3",
+               "format" : "MP3",
+               "length" : 269
+             }
+           }
+         }
+       ]
+     }
+   }
+
+ Response from server:
+
+   HTTP/1.1 409 Conflict
+   Date: Mon, 23 Apr 2012 13:01:20 GMT
+   Server: example-server
+   Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
+   Content-Type: application/yang.patch-status+json
+
+   {
+     "ietf-yang-patch:yang-patch-status" : {
+       "patch-id" : "add-songs-patch",
+       "edit-status" : {
+         "edit" : [
+           {
+             "edit-id" : 1,
+             "errors" : {
+               "error" : [
+                 {
+                   "error-type": "application",
+                   "error-tag": "data-exists",
+                   "error-path": "/example-jukebox:jukebox/library
+                      /artist=Foo%20Fighters/album=Wasting%20Light
+                      /song=Burning%20Light",
+                   "error-message": 
+                     "Data already exists, cannot be created"
+                 }
+               ]
+             }
+           }
+         ]
+       }
+     }
+   }
+
+*** Add Resources: Success
+
+The following example shows several songs being added to
+an existing album.
+
+- Each of 2 edits contains one song.
+- Both edits succeed and new sub-resources are created
+
+ Request from client:
+
+   PATCH /restconf/data/example-jukebox:jukebox/
+      library/artist=Foo%20Fighters/album=Wasting%20Light
+      HTTP/1.1
+   Host: example.com
+   Accept: application/yang.patch-status+json
+   Content-Type: application/yang.patch+json
+
+   {
+     "ietf-yang-patch:yang-patch" : {
+       "patch-id" : "add-songs-patch-2",
+       "edit" : [
+         {
+           "edit-id" : 1,
+           "operation" : "create",
+           "target" : "/song",
+           "value" : {
+             "song" : {
+               "name" : "Rope",
+               "location" : "/media/rope.mp3",
+               "format" : "MP3",
+               "length" : 259
+             }
+           }
+         },
+         {
+           "edit-id" : 2,
+           "operation" : "create",
+           "target" : "/song",
+           "value" : {
+             "song" : {
+               "name" : "Dear Rosemary",
+               "location" : "/media/dear_rosemary.mp3",
+               "format" : "MP3",
+               "length" : 269
+             }
+           }
+         }
+       ]
+     }
+   }
+
+ Response from server:
+
+   HTTP/1.1 200 Success
+   Date: Mon, 23 Apr 2012 13:01:20 GMT
+   Server: example-server
+   Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
+   Content-Type: application/yang.patch-status+json
+
+   {
+     "ietf-yang-patch:yang-patch-status" : {
+       "patch-id" : "add-songs-patch-2",
+       "ok" : [null]
+     }
+   }
+
+
+*** Move list entry example
+
+The following example shows a song being moved within
+an existing playlist. Song "1" in playlist "Foo-One" is
+being moved after song "3" in the playlist.
+The operation succeeds, so a non-error reply example can be shown.
+
+
+ Request from client:
+
+   PATCH /restconf/data/example-jukebox:jukebox/
+     playlist=Foo-One   HTTP/1.1
+   Host: example.com
+   Accept: application/yang.patch-status+json
+   Content-Type: application/yang.patch+json
+
+   {
+     "ietf-yang-patch:yang-patch" : {
+       "patch-id" : "move-song-patch",
+       "comment" : "Move song 1 after song 3",
+       "edit" : [
+         {
+           "edit-id" : 1,
+           "operation" : "move",
+           "target" : "/song/1",
+           "point" : "/song3",
+           "where" : "after"
+         }
+       ]
+     }
+   }
+
+ Response from server:
+
+   HTTP/1.1 400 OK
+   Date: Mon, 23 Apr 2012 13:01:20 GMT
+   Server: example-server
+   Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
+   Content-Type: application/yang.patch-status+json
+
+   {
+     "ietf-restconf:yang-patch-status" : {
+       "patch-id" : "move-song-patch",
+       "ok" : [null]
+     }
+   }
+
+
+{{document:
+    name ;
+    ipr trust200902;
+    category std;
+    references yangpatch-back.xml;
+    title "YANG Patch Media Type";
+    abbreviation "YANG Patch";
+    contributor "author:Andy Bierman:YumaWorks:andy@yumaworks.com";
+    contributor "author:Martin Bjorklund:Tail-f Systems:mbj@tail-f.com";
+    contributor "author:Kent Watsen:Juniper Networks:kwatsen@juniper.net";
+    contributor "author:Rex Fernando:Cisco:rex@cisco.com";
+}}
