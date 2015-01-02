@@ -258,7 +258,7 @@ is used by this module for a grouping definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2014-07-03.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2015-01-02.yang"
 
 * IANA Considerations @iana@
 
@@ -334,9 +334,11 @@ TBD
 
     -- RFC Ed.: remove this section before publication.  
 
-** bierman:yang-patch-00 to ietf:yang-patch-00
+** 01 to 02
 
-- Created open issues section
+- Reversed order of change log
+- Clarified anyxml structure of "value" parameter within
+a YANG patch request
 
 ** 00 to 01
 
@@ -377,6 +379,11 @@ about how the individual edits must be processed.
 There is no concern about duplicate edits which cause
 intermediate results to be altered by subsequent edits
 in the same edit list.
+
+** bierman:yang-patch-00 to ietf:yang-patch-00
+
+- Created open issues section
+
 
 * Open Issues
 

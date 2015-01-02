@@ -55,11 +55,11 @@ module ietf-yang-patch {
   // note.
 
   // RFC Ed.: remove this note
-  // Note: extracted from draft-ietf-netconf-yang-patch-01.txt
+  // Note: extracted from draft-ietf-netconf-yang-patch-02.txt
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2014-07-03 {
+  revision 2015-01-02 {
     description
       "Initial revision.";
     reference
@@ -275,7 +275,28 @@ module ietf-yang-patch {
                replace, and insert operations";
           }
           description
-            "Value used for this edit operation.";
+            "Value used for this edit operation.
+             The anyxml value MUST represent a container with
+             exactly one child node, which MUST identify the
+             target resource associated with the 'target' leaf.
+
+             For example, suppose the target node is a YANG container
+             named foo:
+
+                 container foo {
+                   leaf a { type string; }
+                   leaf b { type int32; }
+                 }
+
+             The value node will contain one instance of foo:
+
+                 <value>
+                    <foo xmlns='example-foo-namespace'>
+                       <a>some value</a>
+                       <b>42</b>
+                    </foo>
+                 </value>
+              ";
         }
       }
     }

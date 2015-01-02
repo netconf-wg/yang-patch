@@ -28,9 +28,9 @@ next := $(draft)-$(next_ver)
 
 .PHONY: latest submit clean
 
-latest: $(draft).txt $(draft).html
-
 submit: $(next).txt
+
+latest: $(draft).txt $(draft).html
 
 idnits: $(next).txt
 	$(idnits) $<
@@ -39,10 +39,10 @@ clean:
 	-rm -f $(draft).txt $(draft).html index.html
 	-rm -f $(next).txt $(next).html
 	-rm -f $(draft)-[0-9][0-9].xml
-ifeq (md,$(draft_type))
+ifeq (.md,$(draft_type))
 	-rm -f $(draft).xml
 endif
-ifeq (org,$(draft_type))
+ifeq (.org,$(draft_type))
 	-rm -f $(draft).xml
 endif
 
@@ -54,7 +54,7 @@ $(next).xml: $(draft).xml
 	$(kramdown-rfc2629) $< > $@
 
 %.xml: %.org
-	$(oxtradoc) -m outline-to-xml -n "$@" $< > $@
+	$(oxtradoc) -m outline-to-xml -n "$(basename $<)-latest" $< > $@
 
 %.txt: %.xml
 	$(xml2rfc) $< -o $@ --text
