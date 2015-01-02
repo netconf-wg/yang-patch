@@ -338,7 +338,9 @@ TBD
 
 - Reversed order of change log
 - Clarified anyxml structure of "value" parameter within
-a YANG patch request
+a YANG patch request (github issue #1)
+- Updated RESTCONF reference
+- Added note to open issues section to check github instead
 
 ** 00 to 01
 
@@ -351,7 +353,7 @@ issue.
 - Removed open issue 'Protocol independence' because the
 location leaf was removed.
 
-- Removed open issue 'RESTCONF coupling' because thre is no
+- Removed open issue 'RESTCONF coupling' because there is no
 concern about a normative reference to RESTCONF.
 There may need to be a YANG 1.1 mechanism to allow protocol
 template usage (instead of grouping wrapper).
@@ -389,7 +391,9 @@ in the same edit list.
 
     -- RFC Ed.: remove this section before publication.  
 
-- There are no open issues at this time.
+Refer to the github issue tracker for any open issues:
+
+   https://github.com/netconf-wg/yang-patch/issues
 
 * Example YANG Module
 
