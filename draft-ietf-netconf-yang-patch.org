@@ -230,7 +230,7 @@ some new operations.
 ** Error Handling
 
 If a well-formed, schema-valid YANG Patch message is received, then
-then the server will process the supplied edits in ascending order.
+the server will process the supplied edits in ascending order.
 The following error modes apply to the processing of this edit list:
 
 All the specified edits MUST be applied or the
