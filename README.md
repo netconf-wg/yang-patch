@@ -1,4 +1,4 @@
-# draft-ietf-netconf-restconf
+# draft-ietf-netconf-yang-patch
 
 This repository is for the development of a IETF draft for the [NETCONF working group](http://datatracker.ietf.org/wg/netconf/charter/).
 
