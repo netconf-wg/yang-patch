@@ -6,8 +6,20 @@ This repository is for the development of a IETF draft for the [NETCONF working 
 
 * IETF Page: https://tools.ietf.org/html/draft-ietf-netconf-restconf
 * Mailing List: https://www.ietf.org/mailman/listinfo/netconf
-* Issue Tracking: https://github.com/netconf-wg/restconf/issues
+* Issue Tracking: https://github.com/netconf-wg/yang-patch/issues
 
+## Issue States
+
+The following labels are used in the issue tracker for issues
+in the "open" state:
+
+- NEW:  A submitted issue
+- OPEN: An accepted issue open to discussion
+- DEAD: A rejected issue closed to discussion
+- VERIFY: An open issue with a solution proposal that needs to be verified on the mailing list
+- EDIT: The issue is waiting for the document editor(s) to make the corresponding changes
+- REVIEW: The edits have been done and the updated I-D need to be reviewed
+- DONE: The edits have been reviewed and the issue has been resolved
 
 
 ## Contributing
