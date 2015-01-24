@@ -2,7 +2,10 @@ module ietf-yang-patch {
   namespace "urn:ietf:params:xml:ns:yang:ietf-yang-patch";
   prefix "ypatch";
 
-  import ietf-restconf { prefix rc; }
+  import ietf-restconf {
+    prefix rc;
+    revision-date 2015-01-24;
+  }
 
   organization
     "IETF NETCONF (Network Configuration) Working Group";
@@ -55,11 +58,11 @@ module ietf-yang-patch {
   // note.
 
   // RFC Ed.: remove this note
-  // Note: extracted from draft-ietf-netconf-yang-patch-02.txt
+  // Note: extracted from draft-ietf-netconf-yang-patch-03.txt
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2015-01-02 {
+  revision 2015-01-24 {
     description
       "Initial revision.";
     reference
@@ -78,11 +81,11 @@ module ietf-yang-patch {
        object definition using this data type.";
   }
 
-  rc:restconf-resource "application/yang.patch" {
+  rc:restconf-media-type "application/yang.patch" {
     uses yang-patch;
   }
 
-  rc:restconf-resource "application/yang.patch-status" {
+  rc:restconf-media-type "application/yang.patch-status" {
     uses yang-patch-status;
   }
 

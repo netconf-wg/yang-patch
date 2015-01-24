@@ -78,6 +78,16 @@ The following terms are defined in ^RFC6020^:
 - ordered-by system
 - ordered-by user
 
+*** RESTCONF
+
+The following terms are defined in ^RESTCONF^:
+
+- data resource
+- datasource resource
+- patch
+- RESTCONF capability
+- target resource
+
 *** Terms
 
 The following terms are used within this document:
@@ -128,8 +138,6 @@ which includes the media type for YANG Patch.
 Example:
 
   Accept-Patch: application/yang.patch
-
-
 
 ** Target Resource
 
@@ -244,22 +252,30 @@ to fail.
 The server will save the running datastore to non-volatile storage
 if it has changed, after the edits have been attempted.
 
+** yang-patch RESTCONF Capability
+
+A URI is defined to identify the YANG Patch extension to
+the base RESTCONF protocol.  If the server supports the
+YANG Patch media type, then the "yang-patch" RESTCONF capability
+defined in ^capability-uri-def^ MUST be present in the
+"capability" leaf-list in the
+"ietf-restconf-monitoring" module defined in ^RESTCONF^.
+
 * YANG Module @module@
 
 The "ietf-yang-patch" module defines conceptual definitions
-within groupings, which are not meant to be implemented
+with the 'restconf-media-type' extension statements,
+which are not meant to be implemented
 as datastore contents by a server.
 
-The "ietf-yang-types" and "ietf-inet_types" modules from ^RFC6991^
-are used by this module for some type definitions.
-
 The "ietf-restconf" module from ^RESTCONF^
-is used by this module for a grouping definition.
+is used by this module for the 'restconf-media-type'
+extension definition.
 
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2015-01-02.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2015-01-24.yang"
 
 * IANA Considerations @iana@
 
@@ -325,9 +341,38 @@ document is application/yang.patch-status.
    // RFC Ed.: replace XXXX with RFC number and remove this note
    Published specification: RFC XXXX
 
+** NETCONF Capability URNs @capability-uri-def@
+
+This document registers several capability identifiers in
+"Network Configuration Protocol (NETCONF) Capability URNs"
+registry
+
+
+  Index
+     Capability Identifier
+  ------------------------
+
+  :yang-patch
+      urn:ietf:params:restconf:capability:yang-patch:1.0
+
+
 * Security Considerations
   
-TBD
+The YANG Patch media type does not introduce any significant
+new security threats, beyond what is described in ^RESTCONF^.
+This document defines edit processing instructions for a
+variant of the PATCH method, as used within the RESTCONF protocol.
+
+It is important for server implementations to carefully
+validate all the edit request parameters in some manner.
+If the entire YANG Patch request cannot be completed,
+then no configuration changes to the system are done.
+
+A server implementation SHOULD attempt to prevent
+system disruption due to partial processing of the
+YANG Patch edit list.  It may be possible to construct
+an attack on such a server, which relies on the
+edit processing order mandated by YANG Patch.
 
 *! start-appendix
 
@@ -340,6 +385,15 @@ their contributions to this document: Rex Fernando.
 * Change Log
 
     -- RFC Ed.: remove this section before publication.  
+
+** 02 to 03
+
+- added usage of restconf-media-type extension to map
+the yang-patch and yang-patch-status groupings
+to media types
+- added yang-patch RESTCONF capability URI
+- Added sub-section for terms used from RESTCONF
+- filled in security considerations section
 
 ** 01 to 02
 
