@@ -4,7 +4,7 @@ module ietf-yang-patch {
 
   import ietf-restconf {
     prefix rc;
-    revision-date 2015-01-24;
+    revision-date 2015-01-30;
   }
 
   organization
@@ -14,11 +14,11 @@ module ietf-yang-patch {
     "WG Web:   <http://tools.ietf.org/wg/netconf/>
      WG List:  <mailto:netconf@ietf.org>
 
-     WG Chair: Bert Wijnen
-               <mailto:bertietf@bwijnen.net>
-
      WG Chair: Mehmet Ersue
                <mailto:mehmet.ersue@nsn.com>
+
+     WG Chair: Mahesh Jethanandani
+               <mailto:mjethanandani@gmail.com>
 
      Editor:   Andy Bierman
                <mailto:andy@yumaworks.com>
@@ -27,10 +27,7 @@ module ietf-yang-patch {
                <mailto:mbj@tail-f.com>
 
      Editor:   Kent Watsen
-               <mailto:kwatsen@juniper.net>
-
-     Editor:   Rex Fernando
-               <mailto:rex@cisco.com>";
+               <mailto:kwatsen@juniper.net>";
 
   description
     "This module contains conceptual YANG specifications
@@ -62,11 +59,11 @@ module ietf-yang-patch {
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2015-01-24 {
+  revision 2015-01-30 {
     description
       "Initial revision.";
     reference
-      "RFC XXXX: YANG Patch";
+      "RFC XXXX: YANG Patch Media Type.";
   }
 
   typedef target-resource-offset {

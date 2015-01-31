@@ -19,7 +19,8 @@ mechanism that can be used with the HTTP PATCH method ^RFC5789^
 or custom NETCONF operations (defined with the YANG rpc-stmt).
 
 YANG Patch is designed to support multiple protocols
-with the same mechanisms.  The RESTCONF ^RESTCONF^ protocol
+with the same mechanisms.  The RESTCONF protocol defined
+in ^I-D.ietf-netconf-restconf^
 utilizes YANG Patch with the HTTP PATCH method. A new RPC
 operation can be defined to utilize YANG Patch in the NETCONF protocol.
 Both the RESTCONF and NETCONF protocols are designed to utilize the YANG
@@ -80,7 +81,7 @@ The following terms are defined in ^RFC6020^:
 
 *** RESTCONF
 
-The following terms are defined in ^RESTCONF^:
+The following terms are defined in ^I-D.ietf-netconf-restconf^:
 
 - data resource
 - datasource resource
@@ -259,7 +260,7 @@ the base RESTCONF protocol.  If the server supports the
 YANG Patch media type, then the "yang-patch" RESTCONF capability
 defined in ^capability-uri-def^ MUST be present in the
 "capability" leaf-list in the
-"ietf-restconf-monitoring" module defined in ^RESTCONF^.
+"ietf-restconf-monitoring" module defined in ^I-D.ietf-netconf-restconf^.
 
 * YANG Module @module@
 
@@ -268,7 +269,7 @@ with the 'restconf-media-type' extension statements,
 which are not meant to be implemented
 as datastore contents by a server.
 
-The "ietf-restconf" module from ^RESTCONF^
+The "ietf-restconf" module from ^I-D.ietf-netconf-restconf^
 is used by this module for the 'restconf-media-type'
 extension definition.
 
@@ -341,11 +342,10 @@ document is application/yang.patch-status.
    // RFC Ed.: replace XXXX with RFC number and remove this note
    Published specification: RFC XXXX
 
-** NETCONF Capability URNs @capability-uri-def@
+** RESTCONF Capability URNs @capability-uri-def@
 
 This document registers several capability identifiers in
-"Network Configuration Protocol (NETCONF) Capability URNs"
-registry
+"RESTCONF Protocol Capability URNs" registry
 
 
   Index
@@ -359,7 +359,8 @@ registry
 * Security Considerations
   
 The YANG Patch media type does not introduce any significant
-new security threats, beyond what is described in ^RESTCONF^.
+new security threats, beyond what is described in
+^I-D.ietf-netconf-restconf^.
 This document defines edit processing instructions for a
 variant of the PATCH method, as used within the RESTCONF protocol.
 
@@ -460,7 +461,7 @@ Refer to the github issue tracker for any open issues:
 
 The example YANG module used in this document represents
 a simple media jukebox interface. The "example-jukebox"
-YANG module is defined in ^RESTCONF^.
+YANG module is defined in ^I-D.ietf-netconf-restconf^.
 
 YANG Tree Diagram for "example-jukebox" Module:
 

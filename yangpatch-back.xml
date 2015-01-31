@@ -243,7 +243,7 @@
 </reference>
  -->
 
-<reference anchor="RESTCONF">
+<reference anchor="I-D.ietf-netconf-restconf">
     <front>
       <title>RESTCONF Protocol</title>
       <author initials="A." surname="Bierman" fullname="A. Bierman">
@@ -255,12 +255,12 @@
       <author initials="K." surname="Watsen" fullname="K. Watsen">
 	<organization>Juniper Networks</organization>
       </author>
-      <date year="2014" month="October"/>
+      <date year="2015" month="January"/>
     </front>
     <seriesInfo name="Internet-Draft"
-                value="draft-ietf-netconf-restconf-03"/>
+                value="draft-ietf-netconf-restconf-04"/>
     <format type='TXT'
-    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-03.txt'/>
+    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-04.txt'/>
 </reference>
 <!-- END RESTCONF -->
 
