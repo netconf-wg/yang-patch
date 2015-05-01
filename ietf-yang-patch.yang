@@ -2,9 +2,11 @@ module ietf-yang-patch {
   namespace "urn:ietf:params:xml:ns:yang:ietf-yang-patch";
   prefix "ypatch";
 
+  import ietf-yang-types { prefix yang; }
+
   import ietf-restconf {
     prefix rc;
-    revision-date 2015-01-30;
+    revision-date 2015-04-04;
   }
 
   organization
@@ -59,7 +61,7 @@ module ietf-yang-patch {
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2015-01-30 {
+  revision 2015-04-30 {
     description
       "Initial revision.";
     reference
@@ -67,15 +69,13 @@ module ietf-yang-patch {
   }
 
   typedef target-resource-offset {
-    type string {
-      length "1 .. max";
-    }
+    type yang:xpath1.0;
     description
-      "Contains a relative Data Resource Identifier formatted string
-       to identify a specific data sub-resource instance.
-       The document root for all data resources is a
-       target data resource that is specified in the
-       object definition using this data type.";
+      "Contains an XPath absolute path expression identifying
+       a sub-resource within the target resource.
+       The document root for this XPath expression is the
+       target resource that is specified in the
+       protocol operation (e.g., the URI for the PATCH request).";
   }
 
   rc:restconf-media-type "application/yang.patch" {
@@ -97,18 +97,13 @@ module ietf-yang-patch {
       description
         "Represents a conceptual sequence of datastore edits,
          called a patch. Each patch is given a client-assigned
-         patch identifier. Each edit MUST be applied
-         in ascending order, and all edits MUST be applied.
+         patch identifier. All edits MUST be applied.
          If any errors occur, then the target datastore MUST NOT
          be changed by the patch operation.
   
-         A patch MUST be validated by the server to be a 
-         well-formed message before any of the patch edits
-         are validated or attempted.
-  
          YANG datastore validation (defined in RFC 6020, section
-         8.3.3) is performed after all edits have been
-         individually validated.
+         8.3.3) is performed before any edits have been applied
+         to the running datastore.
   
          It is possible for a datastore constraint violation to occur
          due to any node in the datastore, including nodes not
@@ -129,9 +124,7 @@ module ietf-yang-patch {
       }
 
       leaf comment {
-        type string {
-          length "0 .. 1024";
-        }
+        type string;
         description
           "An arbitrary string provided by the client to describe
            the entire patch.  This value SHOULD be present in any

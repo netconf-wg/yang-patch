@@ -15,16 +15,10 @@ more precise client control of the transaction procedure than
 existing mechanisms.
 
 This document defines a media type for a YANG-based editing
-mechanism that can be used with the HTTP PATCH method ^RFC5789^
-or custom NETCONF operations (defined with the YANG rpc-stmt).
+mechanism that can be used with the HTTP PATCH method ^RFC5789^.
+YANG Patch is designed to support the RESTCONF protocol,
+defined in ^I-D.ietf-netconf-restconf^.
 
-YANG Patch is designed to support multiple protocols
-with the same mechanisms.  The RESTCONF protocol defined
-in ^I-D.ietf-netconf-restconf^
-utilizes YANG Patch with the HTTP PATCH method. A new RPC
-operation can be defined to utilize YANG Patch in the NETCONF protocol.
-Both the RESTCONF and NETCONF protocols are designed to utilize the YANG
-data modeling language to specify content schema modules.
 
 ** Terminology
 
@@ -37,7 +31,6 @@ The keywords "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 
 The following terms are defined in ^RFC6241^:
 
-- candidate configuration datastore
 - client
 - configuration data
 - datastore
@@ -45,7 +38,6 @@ The following terms are defined in ^RFC6241^:
 - protocol operation
 - running configuration datastore
 - server
-- startup configuration datastore
 - state data
 - user
 
@@ -84,12 +76,12 @@ The following terms are defined in ^RFC6020^:
 The following terms are defined in ^I-D.ietf-netconf-restconf^:
 
 - data resource
-- datasource resource
+- datastore resource
 - patch
 - RESTCONF capability
 - target resource
 
-*** Terms
+*** YANG Patch
 
 The following terms are used within this document:
 
@@ -124,8 +116,7 @@ marked with a colon (":").
 
 A "YANG Patch" is an ordered list of edits that are applied
 to the target datastore by the server. The specific fields
-are defined with the 'application/yang.patch' extension
-definition in the YANG module ^module^.
+are defined in the YANG module in ^module^.
 
 For RESTCONF, the YANG Patch operation is invoked
 by the client by sending a PATCH method request with
@@ -149,10 +140,18 @@ the edit operation.  This root can be the datastore itself, or
 
 For RESTCONF, the target resource is derived from the request URI. 
 
-For NETCONF, the target resource MUST be defined as an input
-parameter in the YANG "rpc" statement.
-
 ** yang-patch Input
+
+A YANG patch is optionally identified by a unique "patch-id" and it
+may have an optional comment.  A patch is an ordered collection of
+edits. Each edit is identified by an "edit-id" and it has an edit
+operation (create, delete, insert, merge, move, replace, remove)
+that is applied to the target resource.  Each edit can be applied
+to a sub-resource "target" within the target resource.
+If the operation is "insert" or "move", then the "where"
+parameter indicates how the node is inserted or moved.
+For values "before" and "after", the "point" parameter
+specifies the data node insertion point.
 
 A data element representing the YANG Patch is sent
 by the client to specify the edit operation request.
@@ -179,8 +178,7 @@ A data element representing the YANG Patch Status is returned
 to the client to report the detailed status of the edit operation.
 When used with the HTTP PATCH method, this data is identified
 by the YANG Patch Status media type, and the syntax specification
-is defined by the 'application/yang.patch-status' extension
-statement defined in ^module^.
+is defined in ^module^.
 
 YANG Tree Diagram For "yang-patch-status" Container:
 
@@ -244,14 +242,17 @@ the server will process the supplied edits in ascending order.
 The following error modes apply to the processing of this edit list:
 
 All the specified edits MUST be applied or the
-target datastore contents SHOULD be returned to its original state
-before the PATCH method started.  The server MAY fail to restore
-the contents of the target datastore completely and with certainty.
-It is possible for a rollback to fail or an "undo" operation
-to fail.
+target datastore contents MUST be returned to its original state
+before the PATCH method started.
 
 The server will save the running datastore to non-volatile storage
-if it has changed, after the edits have been attempted.
+if it has changed, after the edits have been successfully completed.
+
+[FIXME: there is no capability identifying distinct-startup
+like NETCONF, and therefore no client control over NV-storage.
+Is there a need to expose the :distinct-startup capability and require
+the RESTCONF client to perform an extra operation to NV-store
+edits on such a server?]
 
 ** yang-patch RESTCONF Capability
 
@@ -276,7 +277,7 @@ extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2015-01-24.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2015-04-30.yang"
 
 * IANA Considerations @iana@
 
@@ -386,6 +387,17 @@ their contributions to this document: Rex Fernando.
 * Change Log
 
     -- RFC Ed.: remove this section before publication.  
+
+** 03 to 04
+
+- removed NETCONF specific text
+- changed data-resource-offset typedef from a relative URI
+to an XPath absolute path expression
+- clarified insert operation
+- removed requirement that edits MUST be applied in ascending order
+- change SHOULD keep datastore unchanged on error
+to MUST (this is required by HTTP PATCH)
+- removed length restriction on 'comment' leaf
 
 ** 02 to 03
 
@@ -504,7 +516,6 @@ YANG Tree Diagram for "example-jukebox" Module:
 ** YANG Patch Examples
 
 This section includes RESTCONF examples.
-NETCONF examples are TBD.
 Most examples are shown in JSON encoding ^RFC7158^, and some
 are shown in XML encoding ^W3C.REC-xml-20081126^.
 
