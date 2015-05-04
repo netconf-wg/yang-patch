@@ -345,7 +345,7 @@ document is application/yang.patch-status.
 
 ** RESTCONF Capability URNs @capability-uri-def@
 
-This document registers several capability identifiers in
+This document registers one capability identifier in
 "RESTCONF Protocol Capability URNs" registry
 
 
@@ -540,7 +540,7 @@ since the first edit failed.
        "patch-id" : "add-songs-patch",
        "edit" : [
          {
-           "edit-id" : 1,
+           "edit-id" : "edit1",
            "operation" : "create",
            "target" : "/song",
            "value" : {
@@ -553,7 +553,7 @@ since the first edit failed.
            }
          },
          {
-           "edit-id" : 2,
+           "edit-id" : "edit2",
            "operation" : "create",
            "target" : "/song",
            "value" : {
@@ -566,7 +566,7 @@ since the first edit failed.
            }
          },
          {
-           "edit-id" : 3,
+           "edit-id" : "edit3",
            "operation" : "create",
            "target" : "/song",
            "value" : {
@@ -596,7 +596,7 @@ since the first edit failed.
        "edit-status" : {
          "edit" : [
            {
-             "edit-id" : 1,
+             "edit-id" : "edit1",
              "errors" : {
                "error" : [
                  {
@@ -638,7 +638,7 @@ an existing album.
        "patch-id" : "add-songs-patch-2",
        "edit" : [
          {
-           "edit-id" : 1,
+           "edit-id" : "edit1",
            "operation" : "create",
            "target" : "/song",
            "value" : {
@@ -651,7 +651,7 @@ an existing album.
            }
          },
          {
-           "edit-id" : 2,
+           "edit-id" : "edit2",
            "operation" : "create",
            "target" : "/song",
            "value" : {
@@ -705,7 +705,7 @@ The operation succeeds, so a non-error reply example can be shown.
        "comment" : "Move song 1 after song 3",
        "edit" : [
          {
-           "edit-id" : 1,
+           "edit-id" : "edit1",
            "operation" : "move",
            "target" : "/song/1",
            "point" : "/song3",

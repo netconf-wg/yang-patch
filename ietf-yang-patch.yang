@@ -177,7 +177,10 @@ module ietf-yang-patch {
               description
                 "Insert the supplied value into a user-ordered
                  list or leaf-list entry. The target node must
-                 represent a new data resource.";
+                 represent a new data resource. If the 'where'
+                 parameter is set to 'before' or 'after', then
+                 the 'point' parameter identifies the insertion
+                 point for the target node.";
             }
             enum merge {
               description
@@ -188,7 +191,10 @@ module ietf-yang-patch {
               description
                 "Move the target node. Reorder a user-ordered
                  list or leaf-list. The target node must represent
-                 an existing data resource.";
+                 an existing data resource. If the 'where' parameter
+                 is set to 'before' or 'after', then the 'point'
+                 parameter identifies the insertion point to move
+                 the target node.";
             }
             enum replace {
               description

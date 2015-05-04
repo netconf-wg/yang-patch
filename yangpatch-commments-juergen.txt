@@ -169,6 +169,8 @@ And here is my review of draft-ietf-netconf-yang-patch-03...
   identified by point + where to the target or whether it moves the
   target to point + where.
 
+>>>> updated operation 'insert' and 'move' descriptions
+
 - The usage of anyxml seems under-specified. It is non-interoperable
   using the JSON encoding document (which is not even referenced from
   this document - even though we have several examples with JSON
@@ -176,11 +178,19 @@ And here is my review of draft-ietf-netconf-yang-patch-03...
   that clearly says how anyxml is encoded). This actually seems to be
   a usage of anydata.
 
+>>>> no problem to be fixed in this document; no changes
+
 - What about putting the ok leaf into an explicit case? Might be
   easier to read.
 
+
+>>>> short-case style is considered easier to read; no changes
+
+
 - Why is edit-id numeric in some of JSON examples? The YANG model says
   it is a string. Lada would throw an error on this...
+
+>>>> fixed; changed to "editN" strings
 
 ------------------------------------------------------------------
 
