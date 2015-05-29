@@ -308,15 +308,15 @@ The MIME media type for a YANG Patch document is application/yang.patch.
 
    Subtype name: yang.patch
 
-   Required parameters: TBD
+   Required parameters: none
 
-   Optional parameters: TBD
+   Optional parameters: none
 
-   Encoding considerations: TBD
+   Encoding considerations: 8-bit
 
-   Security considerations: TBD
+   Security considerations: See Section 5 of RFC XXXX
 
-   Interoperability considerations: TBD
+   Interoperability considerations: none
 
    // RFC Ed.: replace XXXX with RFC number and remove this note
    Published specification: RFC XXXX
@@ -330,15 +330,15 @@ document is application/yang.patch-status.
 
    Subtype name: yang.patch-status
 
-   Required parameters: TBD
+   Required parameters: none
 
-   Optional parameters: TBD
+   Optional parameters: none
 
-   Encoding considerations: TBD
+   Encoding considerations: 8-bit
 
-   Security considerations: TBD
+   Security considerations: See Section 5 of RFC XXXX
 
-   Interoperability considerations: TBD
+   Interoperability considerations: none
 
    // RFC Ed.: replace XXXX with RFC number and remove this note
    Published specification: RFC XXXX
@@ -387,6 +387,10 @@ their contributions to this document: Rex Fernando.
 * Change Log
 
     -- RFC Ed.: remove this section before publication.  
+
+
+The YANG Patch issue tracker can be found here:
+https://github.com/netconf-wg/yang-patch/issues
 
 ** 03 to 04
 
