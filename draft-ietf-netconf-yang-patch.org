@@ -248,12 +248,6 @@ before the PATCH method started.
 The server will save the running datastore to non-volatile storage
 if it has changed, after the edits have been successfully completed.
 
-[FIXME: there is no capability identifying distinct-startup
-like NETCONF, and therefore no client control over NV-storage.
-Is there a need to expose the :distinct-startup capability and require
-the RESTCONF client to perform an extra operation to NV-store
-edits on such a server?]
-
 ** yang-patch RESTCONF Capability
 
 A URI is defined to identify the YANG Patch extension to
@@ -402,6 +396,7 @@ to an XPath absolute path expression
 - change SHOULD keep datastore unchanged on error
 to MUST (this is required by HTTP PATCH)
 - removed length restriction on 'comment' leaf
+- updated YANG tree for example-jukebox library
 
 ** 02 to 03
 
@@ -481,18 +476,18 @@ YANG module is defined in ^I-D.ietf-netconf-restconf^.
 
 YANG Tree Diagram for "example-jukebox" Module:
 
-   +--rw jukebox?
+   +--rw jukebox!
       +--rw library
-      |  +--rw artist [name]
+      |  +--rw artist* [name]
       |  |  +--rw name     string
-      |  |  +--rw album [name]
+      |  |  +--rw album* [name]
       |  |     +--rw name     string
       |  |     +--rw genre?   identityref
       |  |     +--rw year?    uint16
       |  |     +--rw admin
       |  |     |  +--rw label?              string
       |  |     |  +--rw catalogue-number?   string
-      |  |     +--rw song [name]
+      |  |     +--rw song* [name]
       |  |        +--rw name        string
       |  |        +--rw location    string
       |  |        +--rw format?     string
@@ -500,19 +495,19 @@ YANG Tree Diagram for "example-jukebox" Module:
       |  +--ro artist-count?   uint32
       |  +--ro album-count?    uint32
       |  +--ro song-count?     uint32
-      +--rw playlist [name]
+      +--rw playlist* [name]
       |  +--rw name           string
       |  +--rw description?   string
-      |  +--rw song [index]
+      |  +--rw song* [index]
       |     +--rw index    uint32
-      |     +--rw id       instance-identifier
+      |     +--rw id       leafref
       +--rw player
          +--rw gap?   decimal64
 
   rpcs:
 
-   +---x play    
-      +--ro input     
+   +---x play
+      +--ro input
          +--ro playlist       string
          +--ro song-number    uint32
 

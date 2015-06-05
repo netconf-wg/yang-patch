@@ -6,7 +6,7 @@ module ietf-yang-patch {
 
   import ietf-restconf {
     prefix rc;
-    revision-date 2015-04-04;
+    revision-date 2015-06-04;
   }
 
   organization
@@ -57,11 +57,11 @@ module ietf-yang-patch {
   // note.
 
   // RFC Ed.: remove this note
-  // Note: extracted from draft-ietf-netconf-yang-patch-03.txt
+  // Note: extracted from draft-ietf-netconf-yang-patch-04.txt
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2015-04-30 {
+  revision 2015-06-04 {
     description
       "Initial revision.";
     reference
@@ -97,7 +97,8 @@ module ietf-yang-patch {
       description
         "Represents a conceptual sequence of datastore edits,
          called a patch. Each patch is given a client-assigned
-         patch identifier. All edits MUST be applied.
+         patch identifier. Each edit MUST be applied
+         in ascending order, and all edits MUST be applied.
          If any errors occur, then the target datastore MUST NOT
          be changed by the patch operation.
   
