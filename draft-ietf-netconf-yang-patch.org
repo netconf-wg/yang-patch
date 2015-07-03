@@ -386,6 +386,10 @@ their contributions to this document: Rex Fernando.
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
 
+** 04 to 05
+
+- updated reference to RESTCONF
+
 ** 03 to 04
 
 - removed NETCONF specific text
