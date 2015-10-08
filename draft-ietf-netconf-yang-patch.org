@@ -127,6 +127,14 @@ The RESTCONF server MUST return the Accept-Patch header
 in an OPTIONS response, as specified in ^RFC5789^,
 which includes the media type for YANG Patch.
 
+A YANG Patch can be encoded in XML format according
+to ^W3C.REC-xml-20081126^. It can also be encoded in
+JSON, according to "JSON Encoding of Data Modeled with YANG"
+^I-D.ietf-netmod-yang-json^.  If any meta-data needs to
+be sent in a JSON message, it is encoded according
+to "Defining and Using Metadata with YANG" ^I-D.ietf-netmod-yang-metadata^.
+
+
 Example:
 
   Accept-Patch: application/yang.patch
@@ -386,11 +394,24 @@ their contributions to this document: Rex Fernando.
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
 
-** 04 to 05
+** v05 to v06
+
+- changed errors example so a full request and error
+response is shown in XML format
+
+- fixed error-path to match instance-identifier encoding
+for both XML and JSON
+
+- added references for YANG to JSON and YANG Metadata drafts
+
+- clarified that YANG JSON drafts used for encoding, not plain JSON
+
+
+** v04 to v05
 
 - updated reference to RESTCONF
 
-** 03 to 04
+** v03 to v04
 
 - removed NETCONF specific text
 - changed data-resource-offset typedef from a relative URI
@@ -402,7 +423,7 @@ to MUST (this is required by HTTP PATCH)
 - removed length restriction on 'comment' leaf
 - updated YANG tree for example-jukebox library
 
-** 02 to 03
+** v02 to v03
 
 - added usage of restconf-media-type extension to map
 the yang-patch and yang-patch-status groupings
@@ -411,7 +432,7 @@ to media types
 - Added sub-section for terms used from RESTCONF
 - filled in security considerations section
 
-** 01 to 02
+** v01 to v02
 
 - Reversed order of change log
 - Clarified anyxml structure of "value" parameter within
@@ -419,7 +440,7 @@ a YANG patch request (github issue #1)
 - Updated RESTCONF reference
 - Added note to open issues section to check github instead
 
-** 00 to 01
+** v00 to v01
 
 - Added text requiring support for Accept-Patch header,
 and removed 'Identification of YANG Patch capabilities' open
@@ -528,64 +549,101 @@ The following example shows several songs being added to
 an existing album. Each edit contains one song.
 The first song already exists, so an error will be
 reported for that edit. The rest of the edits were not attempted,
-since the first edit failed.
+since the first edit failed.  The XML encoding is used in this example.
 
  Request from client:
 
    PATCH /restconf/data/example-jukebox:jukebox/
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
    Host: example.com
-   Accept: application/yang.patch-status+json
-   Content-Type: application/yang.patch+json
+   Accept: application/yang.patch-status+xml
+   Content-Type: application/yang.patch+xml
 
-   {
-     "ietf-yang-patch:yang-patch" : {
-       "patch-id" : "add-songs-patch",
-       "edit" : [
-         {
-           "edit-id" : "edit1",
-           "operation" : "create",
-           "target" : "/song",
-           "value" : {
-             "song" : {
-               "name" : "Bridge Burning",
-               "location" : "/media/bridge_burning.mp3",
-               "format" : "MP3",
-               "length" : 288
-             }
-           }
-         },
-         {
-           "edit-id" : "edit2",
-           "operation" : "create",
-           "target" : "/song",
-           "value" : {
-             "song" : {
-               "name" : "Rope",
-               "location" : "/media/rope.mp3",
-               "format" : "MP3",
-               "length" : 259
-             }
-           }
-         },
-         {
-           "edit-id" : "edit3",
-           "operation" : "create",
-           "target" : "/song",
-           "value" : {
-             "song" : {
-               "name" : "Dear Rosemary",
-               "location" : "/media/dear_rosemary.mp3",
-               "format" : "MP3",
-               "length" : 269
-             }
-           }
-         }
-       ]
-     }
-   }
+   <yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
+     <patch-id>add-songs-patch</patch-id>
+     <edit>
+       <edit-id>edit1</edit-id>
+       <operation>create</operation>
+       <target>/song</target>
+       <value>
+         <song xmlns="http://example.com/ns/example-jukebox">
+           <name>Bridge Burning</name>
+           <location>/media/bridge_burning.mp3</location>
+           <format>MP3</format>
+           <length>288</length>
+         </song>
+       </value>
+     </edit>
+     <edit>
+       <edit-id>edit2</edit-id>
+       <operation>create</operation>
+       <target>/song</target>
+       <value>
+         <song xmlns="http://example.com/ns/example-jukebox">
+           <name>Rope</name>
+           <location>/media/rope.mp3</location>
+           <format>MP3</format>
+           <length>259</length>
+         </song>
+       </value>
+     </edit>
+     <edit>
+       <edit-id>edit3</edit-id>
+       <operation>create</operation>
+       <target>/song</target>
+       <value>
+         <song xmlns="http://example.com/ns/example-jukebox">
+           <name>Dear Rosemary</name>
+           <location>/media/dear_rosemary.mp3</location>
+           <format>MP3</format>
+           <length>269</length>
+         </song>
+       </value>
+     </edit>
+   </yang-patch>
 
- Response from server:
+ XML Response from server:
+
+   HTTP/1.1 409 Conflict
+   Date: Mon, 23 Apr 2012 13:01:20 GMT
+   Server: example-server
+   Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
+   Content-Type: application/yang.patch-status+xml
+
+   <yang-patch-status
+      xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
+     <patch-id>add-songs-patch</patch-id>
+     <edit-status>
+       <edit>
+          <edit-id>edit1</edit-id>
+          <errors>
+             <error>
+                <error-type>application</error-type>
+                <error-tag>data-exists</error-tag>
+                <error-path
+                  xmlns:jb="http://example.com/ns/example-jukebox">
+                  /jb:jukebox/jb:library
+                  /jb:artist[jb:name='Foo Fighters']
+                  /jb:album[jb:name='Wasting Light']
+                  /jb:song[jb:name='Burning Light']
+                </error-path>
+                <error-message>
+                  Data already exists, cannot be created
+                </error-message>
+             </error>
+          </errors>
+       </edit>
+    </edit-status>
+  </yang-patch-status>
+
+
+ JSON Response from server:
+
+ The following response is shown in JSON format to highlight the
+ difference in the "error-path" object encoding. For JSON, the
+ instance-identifier encoding in the "JSON Encoding of YANG
+ Data" draft is used. The "error-path" string is wrapped for
+ display purposes.
 
    HTTP/1.1 409 Conflict
    Date: Mon, 23 Apr 2012 13:01:20 GMT
@@ -606,9 +664,10 @@ since the first edit failed.
                    "error-type": "application",
                    "error-tag": "data-exists",
                    "error-path": "/example-jukebox:jukebox/library
-                      /artist=Foo%20Fighters/album=Wasting%20Light
-                      /song=Burning%20Light",
-                   "error-message": 
+                      /artist[name='Foo Fighters']
+                      /album[name='Wasting Light']
+                      /song[name='Burning Light']",
+                   "error-message":
                      "Data already exists, cannot be created"
                  }
                ]
@@ -618,6 +677,7 @@ since the first edit failed.
        }
      }
    }
+
 
 *** Add Resources: Success
 

@@ -264,6 +264,38 @@
 </reference>
 <!-- END RESTCONF -->
 
+
+  <reference anchor="I-D.ietf-netmod-yang-json">
+    <front>
+      <title>JSON Encoding of Data Modeled with YANG</title>
+      <author initials="L." surname="Lhotka" fullname="L. Lhotka">
+	<organization>CZ.NIC</organization>
+      </author>
+      <date year="2015" month="October"/>
+    </front>
+    <seriesInfo name="Internet-Draft"
+                value="draft-ietf-netmod-yang-json-06"/>
+    <format type='TXT'
+    target='http://www.ietf.org/id/draft-ietf-netmod-yang-json-06.txt'/>
+  </reference>
+
+
+  <reference anchor="I-D.ietf-netmod-yang-metadata">
+    <front>
+      <title>Defining and Using Metadata with YANG</title>
+      <author initials="L." surname="Lhotka" fullname="L. Lhotka">
+	<organization>CZ.NIC</organization>
+      </author>
+      <date year="2015" month="September"/>
+    </front>
+    <seriesInfo name="Internet-Draft"
+                value="draft-ietf-netmod-yang-metadata-02"/>
+    <format type='TXT'
+    target='http://www.ietf.org/id/draft-ietf-netmod-yang-metadata-02.txt'/>
+  </reference>
+
+
+
 <reference anchor="RFC7158">
       <front>
         <title>
