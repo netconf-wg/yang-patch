@@ -404,7 +404,7 @@ for both XML and JSON
 
 - added references for YANG to JSON and YANG Metadata drafts
 
-- clarified that YANG JSON drafts used for encoding, not plain JSON
+- clarified that YANG JSON drafts are used for encoding, not plain JSON
 
 
 ** v04 to v05
