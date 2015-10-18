@@ -385,6 +385,12 @@ edit processing order mandated by YANG Patch.
 The authors would like to thank the following people for
 their contributions to this document: Rex Fernando.
 
+Contributions to this material by Andy Bierman are based upon work
+supported by the The Space & Terrestrial Communications Directorate
+(S&TCD) under Contract No. W15P7T-13-C-A616. Any opinions, findings
+and conclusions or recommendations expressed in this material are
+those of the author(s) and do not necessarily reflect the views of
+The Space & Terrestrial Communications Directorate (S&TCD).
 
 * Change Log
 
