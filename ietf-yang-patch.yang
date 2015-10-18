@@ -288,6 +288,11 @@ module ietf-yang-patch {
              exactly one child node, which MUST identify the
              target resource associated with the 'target' leaf.
 
+             The descendants of this node MUST NOT contain
+             an 'anyxml' data node. Only 'list', 'container',
+             'leaf', and 'leaf-list' data nodes can appear as
+             descendant nodes of this object.
+
              For example, suppose the target node is a YANG container
              named foo:
 

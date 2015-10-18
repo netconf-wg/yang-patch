@@ -255,12 +255,12 @@
       <author initials="K." surname="Watsen" fullname="K. Watsen">
 	<organization>Juniper Networks</organization>
       </author>
-      <date year="2015" month="July"/>
+      <date year="2015" month="October"/>
     </front>
     <seriesInfo name="Internet-Draft"
-                value="draft-ietf-netconf-restconf-07"/>
+                value="draft-ietf-netconf-restconf-08"/>
     <format type='TXT'
-    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-07.txt'/>
+    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-08.txt'/>
 </reference>
 <!-- END RESTCONF -->
 
