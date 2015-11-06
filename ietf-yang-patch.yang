@@ -283,8 +283,8 @@ module ietf-yang-patch {
           }
           description
             "Value used for this edit operation.  The anydata 'value'
-             contains the target resource associated with the 'target'
-             leaf.
+             contains the target resource associated with the
+             'target' leaf.
 
              For example, suppose the target node is a YANG container
              named foo:
