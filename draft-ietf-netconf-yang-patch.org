@@ -400,6 +400,14 @@ The Space & Terrestrial Communications Directorate (S&TCD).
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
 
+** v06 to v07
+
+- converted YANG module to YANG 1.1
+- changed anyxml value to anydata value
+- updated import revision date for ietf-restconf
+- updated revision date for ietf-yang-patch because import-by-revision date
+needed to be changed
+
 ** v05 to v06
 
 - changed errors example so a full request and error
