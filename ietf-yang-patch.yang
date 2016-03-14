@@ -168,7 +168,8 @@ module ietf-yang-patch {
               description
                 "The target data node is created using the
                  supplied value, only if it does not already
-                 exist.";
+                 exist.get' leaf identifies the data node to be
+                 created, not the parent data node.";
             }
             enum delete {
               description
@@ -218,8 +219,11 @@ module ietf-yang-patch {
           type target-resource-offset;
           mandatory true;
           description
-            "Identifies the target data resource for the edit
-             operation.";
+            "Identifies the target data node for the edit
+             operation. If the target has the value '/', then
+             the target data node is the target resource.
+             The target node MUST identify a data resource,
+             not the datastore resource.";
         }
 
         leaf point {
@@ -326,7 +330,9 @@ module ietf-yang-patch {
       leaf patch-id {
         type string;
         description
-          "The patch-id value used in the request";
+          "The patch-id value used in the request.
+           If there was no patch-id present in the request
+           then this field will not be present.";
       }
 
       choice global-status {

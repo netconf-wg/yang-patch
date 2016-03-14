@@ -18,6 +18,8 @@ This document defines a media type for a YANG-based editing
 mechanism that can be used with the HTTP PATCH method ^RFC5789^.
 YANG Patch is designed to support the RESTCONF protocol,
 defined in ^I-D.ietf-netconf-restconf^.
+It may be possible to use YANG Patch with other protocols.
+This is outside the scope of this document.
 
 
 ** Terminology
@@ -141,12 +143,14 @@ Example:
 
 ** Target Resource
 
-The YANG Patch operation uses a conceptual root within
-a NETCONF configuration datastore to identity the patch point for
-the edit operation.  This root can be the datastore itself, or
-1 or more data nodes within the datastore.
+The YANG Patch operation uses the RESTCONF target resource URI
+to identify the resource that will be patched.
+This can be the datastore resource itself, i.e.,  "{+restconf}/data",
+or it can be a configuration data resource within the
+datastore resource, e.g., {+restconf/data/ietf-interfaces:interfaces".
 
-For RESTCONF, the target resource is derived from the request URI. 
+Each edit with a YANG Patch identifies a target data node
+for the associated edit. This is described in ^target-data-node^.
 
 ** yang-patch Input
 
@@ -208,7 +212,7 @@ YANG Tree Diagram For "yang-patch-status" Container:
                   +--ro errors
 
 
-** Target Data Node
+** Target Data Node @target-data-node@
 
 The target data node for each edit operation is determined
 by the value of the target resource in the request and the
@@ -216,15 +220,21 @@ by the value of the target resource in the request and the
 
 If the target resource specified in the request URI identifies
 a datastore resource, then the path string in the "target" leaf
-is an absolute path expression. The first node specified
+is treated as an absolute path expression identifying the
+target data node for the corresponding edit. The first node specified
 in the "target" leaf is a top-level data node defined within
-a YANG module.
+a YANG module. The "target" leaf MUST NOT contain a single
+forward slash "/", since this would identify the datastore resource,
+not a data resource.
 
 If the target resource specified in the request URI identifies
-a data resource, then the path string in the "target" leaf
-is a relative path expression. The first node specified
-in the "target" leaf is a child node of the data node associated
-with the target resource.
+a configuration data resource, then the path string in the "target" leaf
+is treated as a relative path expression. The first node specified
+in the "target" leaf is a child configuration data node of
+the data node associated with the target resource.
+If the "target" leaf contains a single
+forward slash "/", then the target data node is
+the target resource data node.
 
 ** Edit Operations
 
