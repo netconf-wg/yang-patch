@@ -1,4 +1,4 @@
-# -*- outline -*-
+# -*- org -*-
 
 This document describes a method for applying patches
 to NETCONF datastores using data defined with the YANG
