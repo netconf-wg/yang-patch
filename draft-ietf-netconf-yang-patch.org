@@ -1,26 +1,30 @@
 # -*- org -*-
 
 This document describes a method for applying patches
-to NETCONF datastores using data defined with the YANG
+to configuration datastores using data defined with the YANG
 data modeling language.
 
 * Introduction
 
-There is a need for standard mechanisms to patch NETCONF ^RFC6241^
-datastores which contain conceptual data that conforms to
-schema specified with YANG ^RFC6020^. An "ordered edit list" 
-approach is needed to provide client developers with a simpler
-edit request format that can be more efficient and also allow
-more precise client control of the transaction procedure than
+There is a need for standard mechanisms to patch
+datastores defined in ^RFC6241^,
+which contain conceptual data that conforms to
+schema specified with YANG ^I-D.ietf-netmod-rfc6020bis^.
+An "ordered edit list" 
+approach is needed to provide client developers with
+more precise client control of the edit procedure than
 existing mechanisms.
 
 This document defines a media type for a YANG-based editing
 mechanism that can be used with the HTTP PATCH method ^RFC5789^.
 YANG Patch is designed to support the RESTCONF protocol,
 defined in ^I-D.ietf-netconf-restconf^.
-It may be possible to use YANG Patch with other protocols.
-This is outside the scope of this document.
 
+It may be possible to use YANG Patch with other protocols
+besides RESTCONF. This is outside the scope of this document.
+It may be possible to use YANG Patch with datastore
+types other than a configuration datastore.  
+This is outside the scope of this document.
 
 ** Terminology
 
@@ -59,7 +63,7 @@ The following terms are defined in ^RFC2616^:
 
 *** YANG
 
-The following terms are defined in ^RFC6020^:
+The following terms are defined in ^I-D.ietf-netmod-rfc6020bis^:
 
 - container
 - data node
@@ -129,17 +133,16 @@ The RESTCONF server MUST return the Accept-Patch header
 in an OPTIONS response, as specified in ^RFC5789^,
 which includes the media type for YANG Patch.
 
+Example:
+
+  Accept-Patch: application/yang.patch
+
 A YANG Patch can be encoded in XML format according
 to ^W3C.REC-xml-20081126^. It can also be encoded in
 JSON, according to "JSON Encoding of Data Modeled with YANG"
 ^I-D.ietf-netmod-yang-json^.  If any meta-data needs to
 be sent in a JSON message, it is encoded according
 to "Defining and Using Metadata with YANG" ^I-D.ietf-netmod-yang-metadata^.
-
-
-Example:
-
-  Accept-Patch: application/yang.patch
 
 ** Target Resource
 
@@ -253,6 +256,20 @@ some new operations.
 !! row  ! replace     ! replace the target data resource with the edit value
 !! row  ! remove      ! remove a data resource if it already exists or no error
 
+** Successful Edit Response Handling
+
+If a YANG Patch is completed without errors, the server MUST
+return a "200 OK" status-line, and a response message-body
+containing a "yang-patch-status" message.
+
+The server will save the running datastore to non-volatile storage
+if it supports non-volatile storage, and if the running datastore
+contents have changed. This will be done
+in an implementation-specific manner.
+
+Refer to ^success-example^ for a example of a successful
+YANG Patch response.
+
 ** Error Handling
 
 If a well-formed, schema-valid YANG Patch message is received, then
@@ -263,8 +280,12 @@ All the specified edits MUST be applied or the
 target datastore contents MUST be returned to its original state
 before the PATCH method started.
 
-The server will save the running datastore to non-volatile storage
-if it has changed, after the edits have been successfully completed.
+If a YANG Patch is completed with errors, the server MUST
+return a "200 OK" status-line, and a response message-body
+containing a "yang-patch-status" message.
+
+Refer to ^error-example^ for a example of an error
+YANG Patch response.
 
 ** yang-patch RESTCONF Capability
 
@@ -289,7 +310,7 @@ extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2015-04-30.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-03-13.yang"
 
 * IANA Considerations @iana@
 
@@ -300,7 +321,7 @@ This document registers one URI in the IETF XML registry
 registration is requested to be made.
 
      URI: urn:ietf:params:xml:ns:yang:ietf-yang-patch
-     Registrant Contact: The NETMOD WG of the IETF.
+     Registrant Contact: The NETCONF WG of the IETF.
      XML: N/A, the requested URI is an XML namespace.
 
 This document registers one YANG module in the YANG Module Names
@@ -377,6 +398,9 @@ new security threats, beyond what is described in
 This document defines edit processing instructions for a
 variant of the PATCH method, as used within the RESTCONF protocol.
 
+It may be possible to use YANG Patch with other protocols
+besides RESTCONF, which is outside the scope of this document.
+
 It is important for server implementations to carefully
 validate all the edit request parameters in some manner.
 If the entire YANG Patch request cannot be completed,
@@ -409,6 +433,17 @@ The Space & Terrestrial Communications Directorate (S&TCD).
 
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
+
+** v07 to v08
+
+- clarified target datastore and target data node terms
+- clarified that target leaf can be single forward slash '/'
+- added Successful edit response handling section
+- clarified that YANG Patch draft is for RESTCONF protocol only
+but may be defined for other protocols outside this document
+- clarified that YANG Patch draft is for configuration datastores
+only but may be defined for other datastore types outside this document
+- fixed typos
 
 ** v06 to v07
 
@@ -567,7 +602,7 @@ This section includes RESTCONF examples.
 Most examples are shown in JSON encoding ^RFC7158^, and some
 are shown in XML encoding ^W3C.REC-xml-20081126^.
 
-*** Add Resources: Error
+*** Add Resources: Error @error-example@
 
 The following example shows several songs being added to
 an existing album. Each edit contains one song.
@@ -703,7 +738,7 @@ since the first edit failed.  The XML encoding is used in this example.
    }
 
 
-*** Add Resources: Success
+*** Add Resources: Success @success-example@
 
 The following example shows several songs being added to
 an existing album.

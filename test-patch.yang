@@ -1,0 +1,16 @@
+module test-patch {
+  yang-version 1.1;
+  namespace "urn:ietf:params:xml:ns:yang:test-patch";
+  prefix "typatch";
+
+  import ietf-yang-patch { prefix yp; }
+
+  revision 2016-03-13;
+
+  container top {
+    config false;
+    uses yp:yang-patch;
+    uses yp:yang-patch-status;
+  }
+
+}
