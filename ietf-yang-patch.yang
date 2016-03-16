@@ -7,7 +7,7 @@ module ietf-yang-patch {
 
   import ietf-restconf {
     prefix rc;
-    revision-date 2016-03-10;
+    revision-date 2016-03-16;
   }
 
   organization
@@ -62,7 +62,7 @@ module ietf-yang-patch {
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2016-03-13 {
+  revision 2016-03-16 {
     description
       "Initial revision.";
     reference

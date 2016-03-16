@@ -310,7 +310,7 @@ extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-03-13.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-03-16.yang"
 
 * IANA Considerations @iana@
 
