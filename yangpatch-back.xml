@@ -16,127 +16,46 @@
     <format type="TXT" octets="4723" target="ftp://ftp.isi.edu/in-notes/rfc2119.txt"/>
   </reference>
 
-
-
-<reference anchor="RFC2616">
-
+<reference anchor="RFC7230" target="http://www.rfc-editor.org/info/rfc7230">
 <front>
-<title abbrev="HTTP/1.1">Hypertext Transfer Protocol -- HTTP/1.1</title>
-<author initials="R." surname="Fielding" fullname="Roy T. Fielding">
-<organization abbrev="UC Irvine">Department of Information and Computer Science</organization>
-<address>
-<postal>
-<street>University of California, Irvine</street>
-<city>Irvine</city>
-<region>CA</region>
-<code>92697-3425</code></postal>
-<facsimile>+1(949)824-1715</facsimile>
-<email>fielding@ics.uci.edu</email></address></author>
-<author initials="J." surname="Gettys" fullname="James Gettys">
-<organization abbrev="Compaq/W3C">World Wide Web Consortium</organization>
-<address>
-<postal>
-<street>MIT Laboratory for Computer Science, NE43-356</street>
-<street>545 Technology Square</street>
-<city>Cambridge</city>
-<region>MA</region>
-<code>02139</code></postal>
-<facsimile>+1(617)258-8682</facsimile>
-<email>jg@w3.org</email></address></author>
-<author initials="J." surname="Mogul" fullname="Jeffrey C. Mogul">
-<organization abbrev="Compaq">Compaq Computer Corporation</organization>
-<address>
-<postal>
-<street>Western Research Laboratory</street>
-<street>250 University Avenue</street>
-<city>Palo Alto</city>
-<region>CA</region>
-<code>94305</code></postal>
-<email>mogul@wrl.dec.com</email></address></author>
-<author initials="H." surname="Frystyk" fullname="Henrik Frystyk Nielsen">
-<organization abbrev="W3C/MIT">World Wide Web Consortium</organization>
-<address>
-<postal>
-<street>MIT Laboratory for Computer Science, NE43-356</street>
-<street>545 Technology Square</street>
-<city>Cambridge</city>
-<region>MA</region>
-<code>02139</code></postal>
-<facsimile>+1(617)258-8682</facsimile>
-<email>frystyk@w3.org</email></address></author>
-<author initials="L." surname="Masinter" fullname="Larry Masinter">
-<organization abbrev="Xerox">Xerox Corporation</organization>
-<address>
-<postal>
-<street>MIT Laboratory for Computer Science, NE43-356</street>
-<street>3333 Coyote Hill Road</street>
-<city>Palo Alto</city>
-<region>CA</region>
-<code>94034</code></postal>
-<email>masinter@parc.xerox.com</email></address></author>
-<author initials="P." surname="Leach" fullname="Paul J. Leach">
-<organization abbrev="Microsoft">Microsoft Corporation</organization>
-<address>
-<postal>
-<street>1 Microsoft Way</street>
-<city>Redmond</city>
-<region>WA</region>
-<code>98052</code></postal>
-<email>paulle@microsoft.com</email></address></author>
-<author initials="T." surname="Berners-Lee" fullname="Tim Berners-Lee">
-<organization abbrev="W3C/MIT">World Wide Web Consortium</organization>
-<address>
-<postal>
-<street>MIT Laboratory for Computer Science, NE43-356</street>
-<street>545 Technology Square</street>
-<city>Cambridge</city>
-<region>MA</region>
-<code>02139</code></postal>
-<facsimile>+1(617)258-8682</facsimile>
-<email>timbl@w3.org</email></address></author>
-<date year="1999" month="June"/>
+<title>
+Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing
+</title>
+<author initials="R." surname="Fielding" fullname="R. Fielding" role="editor">
+<organization/>
+</author>
+<author initials="J." surname="Reschke" fullname="J. Reschke" role="editor">
+<organization/>
+</author>
+<date year="2014" month="June"/>
 <abstract>
 <t>
-   The Hypertext Transfer Protocol (HTTP) is an application-level
-   protocol for distributed, collaborative, hypermedia information
-   systems. It is a generic, stateless, protocol which can be used for
-   many tasks beyond its use for hypertext, such as name servers and
-   distributed object management systems, through extension of its
-   request methods, error codes and headers . A feature of HTTP is
-   the typing and negotiation of data representation, allowing systems
-   to be built independently of the data being transferred.
+The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol for distributed, collaborative, hypertext information systems. This document provides an overview of HTTP architecture and its associated terminology, defines the "http" and "https" Uniform Resource Identifier (URI) schemes, defines the HTTP/1.1 message syntax and parsing requirements, and describes related security concerns for implementations.
 </t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="7230"/>
+<seriesInfo name="DOI" value="10.17487/RFC7230"/>
+</reference>
+
+
+<reference anchor="RFC3688" target="http://www.rfc-editor.org/info/rfc3688">
+<front>
+<title>The IETF XML Registry</title>
+<author initials="M." surname="Mealling" fullname="M. Mealling">
+<organization/>
+</author>
+<date year="2004" month="January"/>
+<abstract>
 <t>
-   HTTP has been in use by the World-Wide Web global information
-   initiative since 1990. This specification defines the protocol
-   referred to as "HTTP/1.1", and is an update to RFC 2068 .
-</t></abstract></front>
-
-<seriesInfo name="RFC" value="2616"/>
-<format type="TXT" octets="422317" target="http://www.rfc-editor.org/rfc/rfc2616.txt"/>
-<format type="PS" octets="5529857" target="http://www.rfc-editor.org/rfc/rfc2616.ps"/>
-<format type="PDF" octets="550558" target="http://www.rfc-editor.org/rfc/rfc2616.pdf"/>
-<format type="HTML" octets="636125" target="http://xml.resource.org/public/rfc/html/rfc2616.html"/>
-<format type="XML" octets="493420" target="http://xml.resource.org/public/rfc/xml/rfc2616.xml"/>
-</reference>  
-
-
-  <reference anchor='RFC3688'>
-    <front>
-      <title>The IETF XML Registry</title>
-      <author initials='M.' surname='Mealling' fullname='M. Mealling'>
-	<organization /></author>
-      <date year='2004' month='January' />
-      <abstract>
-	<t>This document describes an IANA maintained registry for IETF standards which use Extensible Markup Language (XML) related items such as Namespaces, Document Type Declarations (DTDs), Schemas, and Resource Description Framework (RDF) Schemas.</t></abstract></front>
-    
-    <seriesInfo name='BCP' value='81' />
-    <seriesInfo name='RFC' value='3688' />
-    <format type='TXT' octets='17325' target='http://www.rfc-editor.org/rfc/rfc3688.txt' />
-  </reference>
-  
-
-
+This document describes an IANA maintained registry for IETF standards which use Extensible Markup Language (XML) related items such as Namespaces, Document Type Declarations (DTDs), Schemas, and Resource Description Framework (RDF) Schemas.
+</t>
+</abstract>
+</front>
+<seriesInfo name="BCP" value="81"/>
+<seriesInfo name="RFC" value="3688"/>
+<seriesInfo name="DOI" value="10.17487/RFC3688"/>
+</reference>
 
 
 <reference anchor="RFC5789">
@@ -271,12 +190,12 @@
       <author initials="K." surname="Watsen" fullname="K. Watsen">
 	<organization>Juniper Networks</organization>
       </author>
-      <date year="2015" month="October"/>
+      <date year="2016" month="April"/>
     </front>
     <seriesInfo name="Internet-Draft"
-                value="draft-ietf-netconf-restconf-08"/>
+                value="draft-ietf-netconf-restconf-13"/>
     <format type='TXT'
-    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-08.txt'/>
+    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-13.txt'/>
 </reference>
 <!-- END RESTCONF -->
 
@@ -287,12 +206,12 @@
       <author initials="L." surname="Lhotka" fullname="L. Lhotka">
 	<organization>CZ.NIC</organization>
       </author>
-      <date year="2015" month="October"/>
+      <date year="2016" month="March"/>
     </front>
     <seriesInfo name="Internet-Draft"
-                value="draft-ietf-netmod-yang-json-06"/>
+                value="draft-ietf-netmod-yang-json-10"/>
     <format type='TXT'
-    target='http://www.ietf.org/id/draft-ietf-netmod-yang-json-06.txt'/>
+    target='http://www.ietf.org/id/draft-ietf-netmod-yang-json-10.txt'/>
   </reference>
 
 
@@ -302,30 +221,34 @@
       <author initials="L." surname="Lhotka" fullname="L. Lhotka">
 	<organization>CZ.NIC</organization>
       </author>
-      <date year="2015" month="September"/>
+      <date year="2016" month="March"/>
     </front>
     <seriesInfo name="Internet-Draft"
-                value="draft-ietf-netmod-yang-metadata-02"/>
+                value="draft-ietf-netmod-yang-metadata-07"/>
     <format type='TXT'
-    target='http://www.ietf.org/id/draft-ietf-netmod-yang-metadata-02.txt'/>
+    target='http://www.ietf.org/id/draft-ietf-netmod-yang-metadata-07.txt'/>
   </reference>
 
-
-
-<reference anchor="RFC7158">
-      <front>
-        <title>
-          The JavaScript Object Notation (JSON) Data Interchange Format
-        </title>
-        <author initials="T." surname="Bray"
-                fullname="T. Bray" role="editor">
-          <organization />
-        </author>
-        <date month="March" year="2013" />
-      </front>
-      <seriesInfo name="RFC" value="7158" />
-      <format type="TXT"
-              target="http://www.rfc-editor.org/rfc/rfc7158.txt"/>
+<reference anchor="RFC7159" target="http://www.rfc-editor.org/info/rfc7159">
+<front>
+<title>
+The JavaScript Object Notation (JSON) Data Interchange Format
+</title>
+<author initials="T." surname="Bray" fullname="T. Bray" role="editor">
+<organization/>
+</author>
+<date year="2014" month="March"/>
+<abstract>
+<t>
+JavaScript Object Notation (JSON) is a lightweight, text-based, language-independent data interchange format. It was derived from the ECMAScript Programming Language Standard. JSON defines a small set of formatting rules for the portable representation of structured data.
+</t>
+<t>
+This document removes inconsistencies with other specifications of JSON, repairs specification errors, and offers experience-based interoperability guidance.
+</t>
+</abstract>
+</front>
+<seriesInfo name="RFC" value="7159"/>
+<seriesInfo name="DOI" value="10.17487/RFC7159"/>
 </reference>
 
 <reference anchor='W3C.REC-xml-20081126'

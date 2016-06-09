@@ -49,17 +49,13 @@ The following terms are defined in ^RFC6241^:
 
 *** HTTP
 
-The following terms are defined in ^RFC2616^:
+The following terms are defined in ^RFC7230^:
 
-- entity tag
-- fragment
-- header line
+- header field
 - message body
 - method
-- path
 - query
 - request URI
-- response body
 
 *** YANG
 
@@ -129,7 +125,7 @@ by the client by sending a PATCH method request with
 the YANG Patch media type. A message body representing the
 YANG Patch input parameters MUST be provided.
 
-The RESTCONF server MUST return the Accept-Patch header
+The RESTCONF server MUST return the Accept-Patch header field
 in an OPTIONS response, as specified in ^RFC5789^,
 which includes the media type for YANG Patch.
 
@@ -434,6 +430,12 @@ The Space & Terrestrial Communications Directorate (S&TCD).
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
 
+** v08 to v09
+
+- change RFC 7158 reference to RFC 7159 reference
+- change RFC 2616 reference to RFC 7230 reference
+- remove unused HTTP terms
+
 ** v07 to v08
 
 - clarified target datastore and target data node terms
@@ -501,7 +503,7 @@ a YANG patch request (github issue #1)
 
 ** v00 to v01
 
-- Added text requiring support for Accept-Patch header,
+- Added text requiring support for Accept-Patch header field,
 and removed 'Identification of YANG Patch capabilities' open
 issue.
 
@@ -599,7 +601,7 @@ YANG Tree Diagram for "example-jukebox" Module:
 ** YANG Patch Examples
 
 This section includes RESTCONF examples.
-Most examples are shown in JSON encoding ^RFC7158^, and some
+Most examples are shown in JSON encoding ^RFC7159^, and some
 are shown in XML encoding ^W3C.REC-xml-20081126^.
 
 *** Add Resources: Error @error-example@
