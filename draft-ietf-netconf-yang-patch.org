@@ -77,27 +77,29 @@ The following terms are defined in ^I-D.ietf-netmod-rfc6020bis^:
 
 The following terms are defined in ^I-D.ietf-netconf-restconf^:
 
+- application/yang-data+xml
+- application/yang-data+json
 - data resource
 - datastore resource
 - patch
 - RESTCONF capability
 - target resource
+- YANG data template
 
 *** YANG Patch
 
 The following terms are used within this document:
 
 - YANG Patch: a conceptual edit request using the "yang-patch"
-YANG container, defined in ^module^.
-In HTTP, refers to a PATCH method where the media type
-is "application/yang.patch+xml" or "application/yang.patch+json".
+YANG data template, defined in ^module^.
+In HTTP, refers to a PATCH method where a representation uses
+the media type "application/yang-patch+xml" or "application/yang-patch+json".
 
 - YANG Patch Status: a conceptual edit status response using
-the YANG "yang-patch-status" container, defined in ^module^.
+the YANG "yang-patch-status" YANG data template, defined in ^module^.
 In HTTP, refers to a response message for a PATCH method,
-where the message body is identified by the media 
-type "application/yang.patch-status+xml"
-or "application/yang.patch-status+json".
+where it has a representation with either the media type
+"application/yang-data+xml" or "application/yang-data+json".
 
 *** Tree Diagrams
 
@@ -131,7 +133,7 @@ which includes the media type for YANG Patch.
 
 Example:
 
-  Accept-Patch: application/yang.patch
+  Accept-Patch: application/yang-patch+xml,application/yang-patch+json
 
 A YANG Patch can be encoded in XML format according
 to ^W3C.REC-xml-20081126^. It can also be encoded in
@@ -295,24 +297,23 @@ defined in ^capability-uri-def^ MUST be present in the
 * YANG Module @module@
 
 The "ietf-yang-patch" module defines conceptual definitions
-with the 'restconf-media-type' extension statements,
+with the 'yang-data' extension statements,
 which are not meant to be implemented
 as datastore contents by a server.
 
 The "ietf-restconf" module from ^I-D.ietf-netconf-restconf^
-is used by this module for the 'restconf-media-type'
-extension definition.
+is used by this module for the 'yang-data' extension definition.
 
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-03-16.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-06-26.yang"
 
 * IANA Considerations @iana@
 
 ** YANG Module Registry
 
-This document registers one URI in the IETF XML registry
+This document registers one URI as a namespace in the IETF XML registry
 ^RFC3688^. Following the format in RFC 3688, the following
 registration is requested to be made.
 
@@ -329,48 +330,181 @@ registry ^RFC6020^.
   // RFC Ed.: replace XXXX with RFC number and remove this note
   reference:    RFC XXXX
 
-** application/yang.patch Media Types
 
-The MIME media type for a YANG Patch document is application/yang.patch.
+** Media Types @media-types@
+
+*** Media Type application/yang-patch+xml @yang-patch-xml@
+
 
    Type name: application
 
-   Subtype name: yang.patch
+   Subtype name: yang-patch+xml
 
    Required parameters: none
 
    Optional parameters: none
 
+  // RFC Ed.: replace draft-ietf-netmod-rfc6020bis with
+  // the actual RFC reference for YANG 1.1, and remove this note.
+
+  // RFC Ed.: replace 'XXXX' with the real RFC number,
+  // and remove this note
+
    Encoding considerations: 8-bit
+      Each conceptual YANG data node is encoded according to
+      XML Encoding Rules and Canonical Format for the specific
+      YANG data node type defined in [draft-ietf-netmod-rfc6020bis].
+      In addition, the "yang-patch" YANG data template found
+      in [RFCXXXX] defines the structure of a YANG Patch request.
 
-   Security considerations: See Section 5 of RFC XXXX
+  // RFC Ed.: replace 'NN' in Section NN of [RFCXXXX] with the
+  // section number for Security Considerations
+  // Replace 'XXXX' in Section NN of [RFCXXXX] with the actual
+  // RFC number, and remove this note.
 
-   Interoperability considerations: none
+   Security considerations: Security considerations related
+      to the generation and consumption of RESTCONF messages
+      are discussed in Section NN of [RFCXXXX].
+      Additional security considerations are specific to the
+      semantics of particular YANG data models. Each YANG module
+      is expected to specify security considerations for the
+      YANG data defined in that module.
 
-   // RFC Ed.: replace XXXX with RFC number and remove this note
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
+   Interoperability considerations: [RFCXXXX] specifies format of
+      conforming messages and the interpretation thereof.
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
    Published specification: RFC XXXX
 
-** application/yang.patch-status Media Types
+   Applications that use this media type: Instance document
+     data parsers used within a protocol or automation tool
+     that utilizes the YANG Patch data structure.
 
-The MIME media type for a YANG Patch status
-document is application/yang.patch-status.
+   Fragment identifier considerations: The fragment field in the
+      request URI has no defined purpose.
+
+   Additional information:
+
+     Deprecated alias names for this type: n/a
+     Magic number(s): n/a
+     File extension(s): .xml
+     Macintosh file type code(s): "TEXT"
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
+   Person & email address to contact for further information: See
+      Authors' Addresses section of [RFCXXXX].
+
+   Intended usage: COMMON
+
+   (One of COMMON, LIMITED USE, or OBSOLETE.)
+
+   Restrictions on usage: n/a
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
+   Author: See Authors' Addresses section of [RFCXXXX].
+
+   Change controller: Internet Engineering Task Force
+      (mailto:iesg&ietf.org).
+
+   Provisional registration? (standards tree only): no
+
+
+*** Media Type application/yang-patch+json @yang-patch-json@
 
    Type name: application
 
-   Subtype name: yang.patch-status
+   Subtype name: yang-patch+json
 
    Required parameters: none
 
    Optional parameters: none
 
+  // RFC Ed.: replace draft-ietf-netmod-yang-json with
+  // the actual RFC reference for JSON Encoding of YANG Data,
+  //  and remove this note.
+
+  // RFC Ed.: replace draft-ietf-netmod-yang-metadata with
+  // the actual RFC reference for JSON Encoding of YANG Data,
+  //  and remove this note.
+
+  // RFC Ed.: replace 'XXXX' with the real RFC number,
+  // and remove this note
+
    Encoding considerations: 8-bit
+      Each conceptual YANG data node is encoded according to
+      [draft-ietf-netmod-yang-json]. A data annotation is
+      encoded according to [draft-ietf-netmod-yang-metadata]
+      In addition, the "yang-patch" YANG data template found
+      in [RFCXXXX] defines the structure of a YANG Patch request.
 
-   Security considerations: See Section 5 of RFC XXXX
+  // RFC Ed.: replace 'NN' in Section NN of [RFCXXXX] with the
+  // section number for Security Considerations
+  // Replace 'XXXX' in Section NN of [RFCXXXX] with the actual
+  // RFC number, and remove this note.
 
-   Interoperability considerations: none
+   Security considerations: Security considerations related
+      to the generation and consumption of RESTCONF messages
+      are discussed in Section NN of [RFCXXXX].
+      Additional security considerations are specific to the
+      semantics of particular YANG data models. Each YANG module
+      is expected to specify security considerations for the
+      YANG data defined in that module.
 
-   // RFC Ed.: replace XXXX with RFC number and remove this note
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
+   Interoperability considerations: [RFCXXXX] specifies format of
+      conforming messages and the interpretation thereof.
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
    Published specification: RFC XXXX
+
+   Applications that use this media type: Instance document
+     data parsers used within a protocol or automation tool
+     that utilizes the YANG Patch data structure.
+
+   Fragment identifier considerations: The fragment field in the
+      request URI has no defined purpose.
+
+   Additional information:
+
+     Deprecated alias names for this type: n/a
+     Magic number(s): n/a
+     File extension(s): .json
+     Macintosh file type code(s): "TEXT"
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
+   Person & email address to contact for further information: See
+      Authors' Addresses section of [RFCXXXX].
+
+   Intended usage: COMMON
+
+   (One of COMMON, LIMITED USE, or OBSOLETE.)
+
+   Restrictions on usage: n/a
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note.
+
+   Author: See Authors' Addresses section of [RFCXXXX].
+
+   Change controller: Internet Engineering Task Force
+      (mailto:iesg&ietf.org).
+
+   Provisional registration? (standards tree only): no
 
 ** RESTCONF Capability URNs @capability-uri-def@
 
@@ -435,6 +569,7 @@ https://github.com/netconf-wg/yang-patch/issues
 - change RFC 7158 reference to RFC 7159 reference
 - change RFC 2616 reference to RFC 7230 reference
 - remove unused HTTP terms
+- remove import-by-revision of ietf-restconf; not needed
 
 ** v07 to v08
 
@@ -617,8 +752,8 @@ since the first edit failed.  The XML encoding is used in this example.
    PATCH /restconf/data/example-jukebox:jukebox/
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
    Host: example.com
-   Accept: application/yang.patch-status+xml
-   Content-Type: application/yang.patch+xml
+   Accept: application/yang-data+xml
+   Content-Type: application/yang-patch+xml
 
    <yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
      <patch-id>add-songs-patch</patch-id>
@@ -669,7 +804,7 @@ since the first edit failed.  The XML encoding is used in this example.
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang.patch-status+xml
+   Content-Type: application/yang-data+xml
 
    <yang-patch-status
       xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
@@ -710,7 +845,7 @@ since the first edit failed.  The XML encoding is used in this example.
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang.patch-status+json
+   Content-Type: application/yang-data+json
 
    {
      "ietf-yang-patch:yang-patch-status" : {
@@ -754,8 +889,8 @@ an existing album.
       library/artist=Foo%20Fighters/album=Wasting%20Light
       HTTP/1.1
    Host: example.com
-   Accept: application/yang.patch-status+json
-   Content-Type: application/yang.patch+json
+   Accept: application/yang-data+json
+   Content-Type: application/yang-patch+json
 
    {
      "ietf-yang-patch:yang-patch" : {
@@ -797,7 +932,7 @@ an existing album.
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang.patch-status+json
+   Content-Type: application/yang-data+json
 
    {
      "ietf-yang-patch:yang-patch-status" : {
@@ -820,8 +955,8 @@ The operation succeeds, so a non-error reply example can be shown.
    PATCH /restconf/data/example-jukebox:jukebox/
      playlist=Foo-One   HTTP/1.1
    Host: example.com
-   Accept: application/yang.patch-status+json
-   Content-Type: application/yang.patch+json
+   Accept: application/yang-patch+json
+   Content-Type: application/yang-data+json
 
    {
      "ietf-yang-patch:yang-patch" : {
@@ -845,7 +980,7 @@ The operation succeeds, so a non-error reply example can be shown.
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang.patch-status+json
+   Content-Type: application/yang-data+json
 
    {
      "ietf-restconf:yang-patch-status" : {
