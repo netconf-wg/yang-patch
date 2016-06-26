@@ -256,7 +256,7 @@ some new operations.
 
 ** Successful Edit Response Handling
 
-If a YANG Patch is completed without errors, the server MUST
+If a YANG Patch is completed without errors, the server SHOULD
 return a "200 OK" status-line, and a response message-body
 containing a "yang-patch-status" message.
 
@@ -274,11 +274,10 @@ If a well-formed, schema-valid YANG Patch message is received, then
 the server will process the supplied edits in ascending order.
 The following error modes apply to the processing of this edit list:
 
-All the specified edits MUST be applied or the
-target datastore contents MUST be returned to its original state
-before the PATCH method started.
+The PATCH method is applied "all-or-none", according to
+Section 2 of ^RFC5789^.
 
-If a YANG Patch is completed with errors, the server MUST
+If a YANG Patch is completed with errors, the server SHOULD
 return a "200 OK" status-line, and a response message-body
 containing a "yang-patch-status" message.
 
