@@ -93,7 +93,7 @@ The following terms are used within this document:
 - YANG Patch: a conceptual edit request using the "yang-patch"
 YANG data template, defined in ^module^.
 In HTTP, refers to a PATCH method where a representation uses
-the media type "application/yang-patch+xml" or "application/yang-patch+json".
+either the media type "application/yang-patch+xml" or "application/yang-patch+json".
 
 - YANG Patch Status: a conceptual edit status response using
 the YANG "yang-patch-status" YANG data template, defined in ^module^.
@@ -124,7 +124,8 @@ are defined in the YANG module in ^module^.
 
 For RESTCONF, the YANG Patch operation is invoked
 by the client by sending a PATCH method request with
-the YANG Patch media type. A message body representing the
+a representation using either the "application/yang-patch+xml"
+or "application/yang-patch+json" media type. A message body representing the
 YANG Patch input parameters MUST be provided.
 
 The RESTCONF server MUST return the Accept-Patch header field
@@ -301,7 +302,7 @@ is used by this module for the 'yang-data' extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-06-26.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-06-28.yang"
 
 * IANA Considerations @iana@
 
@@ -326,6 +327,7 @@ registry ^RFC6020^.
 
 
 ** Media Types @media-types@
+
 
 *** Media Type application/yang-patch+xml @yang-patch-xml@
 
@@ -410,7 +412,6 @@ registry ^RFC6020^.
       (mailto:iesg&ietf.org).
 
    Provisional registration? (standards tree only): no
-
 
 *** Media Type application/yang-patch+json @yang-patch-json@
 
@@ -564,6 +565,9 @@ https://github.com/netconf-wg/yang-patch/issues
 - change RFC 2616 reference to RFC 7230 reference
 - remove unused HTTP terms
 - remove import-by-revision of ietf-restconf; not needed
+- change application/yang.patch media type to application/yang-patch
+- remove application/yang.patch-status media type; use application/yang-data
+instead
 
 ** v07 to v08
 
