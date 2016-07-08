@@ -77,7 +77,7 @@ The following terms are defined in ^I-D.ietf-netmod-rfc6020bis^:
 
 The following terms are defined in ^I-D.ietf-netconf-restconf^:
 
-- application/yang-data+xml
+- application/yang-data
 - application/yang-data+json
 - data resource
 - datastore resource
@@ -93,13 +93,13 @@ The following terms are used within this document:
 - YANG Patch: a conceptual edit request using the "yang-patch"
 YANG data template, defined in ^module^.
 In HTTP, refers to a PATCH method where a representation uses
-either the media type "application/yang-patch+xml" or "application/yang-patch+json".
+either the media type "application/yang-patch" or "application/yang-patch+json".
 
 - YANG Patch Status: a conceptual edit status response using
 the YANG "yang-patch-status" YANG data template, defined in ^module^.
 In HTTP, refers to a response message for a PATCH method,
 where it has a representation with either the media type
-"application/yang-data+xml" or "application/yang-data+json".
+"application/yang-data" or "application/yang-data+json".
 
 *** Tree Diagrams
 
@@ -124,7 +124,7 @@ are defined in the YANG module in ^module^.
 
 For RESTCONF, the YANG Patch operation is invoked
 by the client by sending a PATCH method request with
-a representation using either the "application/yang-patch+xml"
+a representation using either the "application/yang-patch"
 or "application/yang-patch+json" media type. A message body representing the
 YANG Patch input parameters MUST be provided.
 
@@ -134,7 +134,7 @@ which includes the media type for YANG Patch.
 
 Example:
 
-  Accept-Patch: application/yang-patch+xml,application/yang-patch+json
+  Accept-Patch: application/yang-patch,application/yang-patch+json
 
 A YANG Patch can be encoded in XML format according
 to ^W3C.REC-xml-20081126^. It can also be encoded in
@@ -302,7 +302,7 @@ is used by this module for the 'yang-data' extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-06-28.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-07-07.yang"
 
 * IANA Considerations @iana@
 
@@ -329,12 +329,12 @@ registry ^RFC6020^.
 ** Media Types @media-types@
 
 
-*** Media Type application/yang-patch+xml @yang-patch-xml@
+*** Media Type application/yang-patch @yang-patch-xml@
 
 
    Type name: application
 
-   Subtype name: yang-patch+xml
+   Subtype name: yang-patch
 
    Required parameters: None
 
@@ -467,8 +467,9 @@ registry ^RFC6020^.
      data parsers used within a protocol or automation tool
      that utilize the YANG Patch data structure.
 
-   Fragment identifier considerations: The fragment field in the
-      request URI has no defined purpose.
+   Fragment identifier considerations: The syntax and semantics
+      of fragment identifiers are the same as specified for the
+     "application/json" media type.
 
    Additional information:
 
@@ -554,6 +555,13 @@ The Space & Terrestrial Communications Directorate (S&TCD).
 
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
+
+** v09 to v10
+
+- change yang-patch+xml to yang-patch
+- clarify application/yang-patch+json media type
+- add edit datastore example
+- change data-resource-offset typedef so it is consistent for XML and JSON
 
 ** v08 to v09
 
@@ -746,8 +754,8 @@ since the first edit failed.  The XML encoding is used in this example.
    PATCH /restconf/data/example-jukebox:jukebox/
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
    Host: example.com
-   Accept: application/yang-data+xml
-   Content-Type: application/yang-patch+xml
+   Accept: application/yang-data
+   Content-Type: application/yang-patch
 
    <yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
      <patch-id>add-songs-patch</patch-id>
@@ -798,7 +806,7 @@ since the first edit failed.  The XML encoding is used in this example.
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang-data+xml
+   Content-Type: application/yang-data
 
    <yang-patch-status
       xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
@@ -949,8 +957,8 @@ The operation succeeds, so a non-error reply example can be shown.
    PATCH /restconf/data/example-jukebox:jukebox/
      playlist=Foo-One   HTTP/1.1
    Host: example.com
-   Accept: application/yang-patch+json
-   Content-Type: application/yang-data+json
+   Accept: application/yang-data+json
+   Content-Type: application/yang-patch+json
 
    {
      "ietf-yang-patch:yang-patch" : {
@@ -982,6 +990,80 @@ The operation succeeds, so a non-error reply example can be shown.
        "ok" : [null]
      }
    }
+
+
+*** Edit datastore resource example
+
+The following example shows how 3 top-level data nodes from
+different modules can be edited at the same time.
+
+Example module "foo" defines leaf X.
+Example module "bar" defines container Y, with child leafs A and B.
+Example module "baz" defines list Z, with key C and child leafs D and E.
+
+
+ Request from client:
+
+   PATCH /restconf/data  HTTP/1.1
+   Host: example.com
+   Accept: application/yang-data+json
+   Content-Type: application/yang-patch+json
+
+   {
+     "ietf-yang-patch:yang-patch" : {
+       "patch-id" : "datastore-patch-1",
+       "comment" : "Edit 3 top-level data nodes at once",
+       "edit" : [
+         {
+           "edit-id" : "edit1",
+           "operation" : "create",
+           "target" : "/foo:X",
+           "value" : {
+             "foo:X" : 42
+           }
+         },
+         {
+           "edit-id" : "edit2",
+           "operation" : "merge",
+           "target" : "/bar:Y",
+           "value" : {
+             "bar:Y" : {
+               "A" : "test1",
+               "B" : 99
+             }
+           }
+         },
+         {
+           "edit-id" : "edit3",
+           "operation" : "replace",
+           "target" : "/baz:Z=2",
+           "value" : {
+             "baz:Z" : {
+               "C" : 2,
+               "D" : 100,
+               "E" : false
+             }
+           }
+         }
+       ]
+     }
+   }
+
+ Response from server:
+
+   HTTP/1.1 400 OK
+   Date: Mon, 23 Apr 2012 13:02:20 GMT
+   Server: example-server
+   Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
+   Content-Type: application/yang-data+json
+
+   {
+     "ietf-restconf:yang-patch-status" : {
+       "patch-id" : "datastore-patch-1",
+       "ok" : [null]
+     }
+   }
+
 
 
 {{document:
