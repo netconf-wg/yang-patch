@@ -588,6 +588,14 @@ YANG Patch edit list.  It may be possible to construct
 an attack on such a RESTCONF server, which relies on the
 edit processing order mandated by YANG Patch.
 
+A RESTCONF server implementation SHOULD attempt to prevent
+system disruption due to excessive resource consumption
+required to fulfill YANG Patch edit requests.
+It may be possible to construct
+an attack on such a RESTCONF server, which attempts to
+consume all available memory or other resource types.
+
+
 *! start-appendix
 
 * Acknowledgements
@@ -618,6 +626,9 @@ https://github.com/netconf-wg/yang-patch/issues
 - clarified that YANG 1.0 content can be used in a YANG Patch
 implementation
 - clarified more terminology
+- fixed missing keys in edit exmaples
+- added insert list example
+
 
 ** v09 to v10
 
@@ -825,7 +836,7 @@ since the first edit failed.  The XML encoding is used in this example.
      <edit>
        <edit-id>edit1</edit-id>
        <operation>create</operation>
-       <target>/song</target>
+       <target>/song=Bridge%20Burning</target>
        <value>
          <song xmlns="http://example.com/ns/example-jukebox">
            <name>Bridge Burning</name>
@@ -838,7 +849,7 @@ since the first edit failed.  The XML encoding is used in this example.
      <edit>
        <edit-id>edit2</edit-id>
        <operation>create</operation>
-       <target>/song</target>
+       <target>/song=Rope</target>
        <value>
          <song xmlns="http://example.com/ns/example-jukebox">
            <name>Rope</name>
@@ -851,7 +862,7 @@ since the first edit failed.  The XML encoding is used in this example.
      <edit>
        <edit-id>edit3</edit-id>
        <operation>create</operation>
-       <target>/song</target>
+       <target>/song=Dear%20Rosemary</target>
        <value>
          <song xmlns="http://example.com/ns/example-jukebox">
            <name>Dear Rosemary</name>
@@ -964,7 +975,7 @@ an existing album.
          {
            "edit-id" : "edit1",
            "operation" : "create",
-           "target" : "/song",
+           "target" : "/song=Rope",
            "value" : {
              "song" : {
                "name" : "Rope",
@@ -977,7 +988,7 @@ an existing album.
          {
            "edit-id" : "edit2",
            "operation" : "create",
-           "target" : "/song",
+           "target" : "/song=Dear%20Rosemary",
            "value" : {
              "song" : {
                "name" : "Dear Rosemary",
@@ -1007,11 +1018,68 @@ an existing album.
    }
 
 
+*** Insert list entry example
+
+The following example shows a song being inserted within
+an existing playlist. Song "6" in playlist "Foo-One" is
+being inserted after song "5" in the playlist.
+The operation succeeds, so a non-error reply example can be shown.
+
+ Request from the RESTCONF client:
+
+   PATCH /restconf/data/example-jukebox:jukebox/
+     playlist=Foo-One   HTTP/1.1
+   Host: example.com
+   Accept: application/yang-data+json
+   Content-Type: application/yang-patch+json
+
+   {
+     "ietf-yang-patch:yang-patch" : {
+       "patch-id" : "move-song-patch",
+       "comment" : "Insert song 6 after song 5",
+       "edit" : [
+         {
+           "edit-id" : "edit1",
+           "operation" : "insert",
+           "target" : "/song=6",
+           "point" : "/song=5",
+           "where" : "after",
+           "value" : {
+             "example-jukebox:song" : {
+               "name" : "Dear Prudence",
+               "location" : "/media/dear_prudence.mp3",
+               "format" : "MP3",
+               "length" : 236
+             }
+           }
+         }
+       ]
+     }
+   }
+
+ Response from the RESTCONF server:
+
+   HTTP/1.1 400 OK
+   Date: Mon, 23 Apr 2012 13:01:20 GMT
+   Server: example-server
+   Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
+   Content-Type: application/yang-data+json
+
+   {
+     "ietf-restconf:yang-patch-status" : {
+       "patch-id" : "move-song-patch",
+       "ok" : [null]
+     }
+   }
+
+
+
 *** Move list entry example
 
 The following example shows a song being moved within
 an existing playlist. Song "1" in playlist "Foo-One" is
 being moved after song "3" in the playlist.
+Note that no "value" parameter is needed for a "move" operation.
 The operation succeeds, so a non-error reply example can be shown.
 
  Request from the RESTCONF client:
@@ -1030,8 +1098,8 @@ The operation succeeds, so a non-error reply example can be shown.
          {
            "edit-id" : "edit1",
            "operation" : "move",
-           "target" : "/song/1",
-           "point" : "/song3",
+           "target" : "/song=1",
+           "point" : "/song=3",
            "where" : "after"
          }
        ]
