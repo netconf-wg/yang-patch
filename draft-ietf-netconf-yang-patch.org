@@ -63,15 +63,10 @@ The following terms are defined in ^I-D.ietf-netmod-rfc6020bis^:
 
 - container
 - data node
-- key leaf
 - leaf
 - leaf-list
 - list
-- presence container (or P-container)
 - RPC operation (now called protocol operation)
-- non-presence container (or NP-container)
-- ordered-by system
-- ordered-by user
 
 *** RESTCONF
 
