@@ -210,7 +210,7 @@ by the YANG Patch media type.
 
 YANG Tree Diagram for "yang-patch" Container
 
-     +---- yang-patch
+  +---- yang-patch
         +---- patch-id?   string
         +---- comment?    string
         +---- edit* [edit-id]
@@ -232,7 +232,7 @@ is defined in ^module^.
 
 YANG Tree Diagram for "yang-patch-status" Container:
 
-    +---- yang-patch-status
+  +---- yang-patch-status
         +---- patch-id?      string
         +---- (global-status)?
         |  +--:(global-errors)
@@ -359,25 +359,24 @@ This document registers one URI as a namespace in the IETF XML registry
 ^RFC3688^. Following the format in RFC 3688, the following
 registration is requested to be made.
 
-     URI: urn:ietf:params:xml:ns:yang:ietf-yang-patch
-     Registrant Contact: The NETCONF WG of the IETF.
-     XML: N/A, the requested URI is an XML namespace.
+      URI: urn:ietf:params:xml:ns:yang:ietf-yang-patch
+      Registrant Contact: The NETCONF WG of the IETF.
+      XML: N/A, the requested URI is an XML namespace.
 
 This document registers one YANG module in the YANG Module Names
 registry ^RFC6020^.
 
-  name:         ietf-yang-patch
-  namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-patch
-  prefix:       ypatch
-  // RFC Ed.: replace XXXX with RFC number and remove this note
-  reference:    RFC XXXX
+      name:         ietf-yang-patch
+      namespace:    urn:ietf:params:xml:ns:yang:ietf-yang-patch
+      prefix:       ypatch
+      // RFC Ed.: replace XXXX with RFC number and remove this note
+      reference:    RFC XXXX
 
 
 ** Media Types @media-types@
 
 
 *** Media Type application/yang-patch-xml @yang-patch-xml@
-
 
    Type name: application
 
@@ -807,7 +806,7 @@ The first song already exists, so an error will be
 reported for that edit. The rest of the edits were not attempted,
 since the first edit failed.  The XML encoding is used in this example.
 
- Request from the RESTCONF client:
+Request from the RESTCONF client:
 
    PATCH /restconf/data/example-jukebox:jukebox/
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
@@ -858,7 +857,7 @@ since the first edit failed.  The XML encoding is used in this example.
      </edit>
    </yang-patch>
 
- XML Response from the RESTCONF server:
+XML Response from the RESTCONF server:
 
    HTTP/1.1 409 Conflict
    Date: Mon, 23 Apr 2012 13:01:20 GMT
@@ -893,13 +892,13 @@ since the first edit failed.  The XML encoding is used in this example.
   </yang-patch-status>
 
 
- JSON Response from the RESTCONF server:
+JSON Response from the RESTCONF server:
 
- The following response is shown in JSON format to highlight the
- difference in the "error-path" object encoding. For JSON, the
- instance-identifier encoding in the "JSON Encoding of YANG
- Data" draft is used. The "error-path" string is wrapped for
- display purposes.
+The following response is shown in JSON format to highlight the
+difference in the "error-path" object encoding. For JSON, the
+instance-identifier encoding in the "JSON Encoding of YANG
+Data" draft is used. The "error-path" string is wrapped for
+display purposes.
 
    HTTP/1.1 409 Conflict
    Date: Mon, 23 Apr 2012 13:01:20 GMT
@@ -943,7 +942,7 @@ an existing album.
 - Each of 2 edits contains one song.
 - Both edits succeed and new sub-resources are created
 
- Request from the RESTCONF client:
+Request from the RESTCONF client:
 
    PATCH /restconf/data/example-jukebox:jukebox/
       library/artist=Foo%20Fighters/album=Wasting%20Light
@@ -986,7 +985,7 @@ an existing album.
      }
    }
 
- Response from the RESTCONF server:
+Response from the RESTCONF server:
 
    HTTP/1.1 200 Success
    Date: Mon, 23 Apr 2012 13:01:20 GMT
@@ -1009,7 +1008,7 @@ an existing playlist. Song "1" in playlist "Foo-One" is
 being moved after song "3" in the playlist.
 The operation succeeds, so a non-error reply example can be shown.
 
- Request from the RESTCONF client:
+Request from the RESTCONF client:
 
    PATCH /restconf/data/example-jukebox:jukebox/
      playlist=Foo-One   HTTP/1.1
@@ -1033,7 +1032,7 @@ The operation succeeds, so a non-error reply example can be shown.
      }
    }
 
- Response from the RESTCONF server:
+Response from the RESTCONF server:
 
    HTTP/1.1 400 OK
    Date: Mon, 23 Apr 2012 13:01:20 GMT
@@ -1058,7 +1057,7 @@ Example module "foo" defines leaf X.
 Example module "bar" defines container Y, with child leafs A and B.
 Example module "baz" defines list Z, with key C and child leafs D and E.
 
- Request from the RESTCONF client:
+Request from the RESTCONF client:
 
    PATCH /restconf/data  HTTP/1.1
    Host: example.com
@@ -1105,7 +1104,7 @@ Example module "baz" defines list Z, with key C and child leafs D and E.
      }
    }
 
- Response from the RESTCONF server:
+Response from the RESTCONF server:
 
    HTTP/1.1 400 OK
    Date: Mon, 23 Apr 2012 13:02:20 GMT
