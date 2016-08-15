@@ -107,7 +107,17 @@ where it has a representation with either the media type
 it has a representation with the media type "application/yang-patch-xml"
 or "application/yang-patch+json".
 
-*** Tree Diagram Notations
+*** Examples @examples@
+
+Some protocol message lines within examples throughout the document
+are split into multiple lines for display purposes only.
+When a line ends with backslash ('\') as the last character,
+the line is wrapped for display purposes.  It is to be
+considered to be joined to the next line by deleting the
+backslash, the following line break,
+and the leading whitespace of the next line.
+
+*** Tree Diagrams
 
 A simplified graphical representation of the data model is used in
 this document.  The meaning of the symbols in these
@@ -115,7 +125,8 @@ diagrams is as follows:
 
 - Brackets "[" and "]" enclose list keys.
 - Abbreviations before data node names: "rw" means configuration
-(read-write) and "ro" state data (read-only).
+data (read-write), "ro" state data (read-only), and "x"
+operation resource (executable)
 - Symbols after data node names: "?" means an optional node and "*"
 denotes a "list" and "leaf-list".
 - Parentheses enclose choice and case nodes, and case nodes are also
@@ -208,7 +219,7 @@ by the RESTCONF client to specify the edit operation request.
 When used with the HTTP PATCH method, this data is identified
 by the YANG Patch media type.
 
-YANG Tree Diagram for "yang-patch" Container
+YANG tree diagram for "yang-patch" Container
 
   +---- yang-patch
         +---- patch-id?   string
@@ -230,7 +241,7 @@ When used with the HTTP PATCH method, this data is identified
 by the YANG Patch Status media type, and the syntax specification
 is defined in ^module^.
 
-YANG Tree Diagram for "yang-patch-status" Container:
+YANG tree diagram for "yang-patch-status" Container:
 
   +---- yang-patch-status
         +---- patch-id?      string
@@ -349,7 +360,7 @@ is used by this module for the 'yang-data' extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-07-07.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-08-15.yang"
 
 * IANA Considerations @iana@
 
@@ -765,7 +776,7 @@ The example YANG module used in this document represents
 a simple media jukebox interface. The "example-jukebox"
 YANG module is defined in ^I-D.ietf-netconf-restconf^.
 
-YANG Tree Diagram for "example-jukebox" Module:
+YANG tree diagram for "example-jukebox" Module:
 
    +--rw jukebox!
       +--rw library
@@ -908,8 +919,7 @@ JSON Response from the RESTCONF server:
 The following response is shown in JSON format to highlight the
 difference in the "error-path" object encoding. For JSON, the
 instance-identifier encoding in the "JSON Encoding of YANG
-Data" draft is used. The "error-path" string is wrapped for
-display purposes.
+Data" draft is used.
 
    HTTP/1.1 409 Conflict
    Date: Mon, 23 Apr 2012 13:01:20 GMT
@@ -929,9 +939,9 @@ display purposes.
                  {
                    "error-type": "application",
                    "error-tag": "data-exists",
-                   "error-path": "/example-jukebox:jukebox/library
-                      /artist[name='Foo Fighters']
-                      /album[name='Wasting Light']
+                   "error-path": "/example-jukebox:jukebox/library\
+                      /artist[name='Foo Fighters']\
+                      /album[name='Wasting Light']\
                       /song[name='Burning Light']",
                    "error-message":
                      "Data already exists, cannot be created"
