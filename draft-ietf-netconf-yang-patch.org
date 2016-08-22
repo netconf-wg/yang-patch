@@ -194,7 +194,7 @@ to identify the resource that will be patched.
 This can be the datastore resource itself, i.e.,  "{+restconf}/data",
 to edit top-level configuration data resources,
 or it can be a configuration data resource within the
-datastore resource, e.g., {+restconf/data/ietf-interfaces:interfaces",
+datastore resource, e.g., "{+restconf/data/ietf-interfaces:interfaces",
 to edit sub-resources within a top-level configuration
 data resource.
 
