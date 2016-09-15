@@ -9,8 +9,8 @@ data modeling language.
 There is a need for standard mechanisms to patch
 datastores defined in ^RFC6241^,
 which contain conceptual data that conforms to
-schema specified with YANG ^I-D.ietf-netmod-rfc6020bis^.
-An "ordered edit list" 
+schema specified with YANG ^RFC7950^.
+An "ordered edit list"
 approach is needed to provide RESTCONF client developers with
 more precise RESTCONF client control of the edit procedure than
 existing mechanisms found in ^I-D.ietf-netconf-restconf^.
@@ -23,7 +23,7 @@ defined in ^I-D.ietf-netconf-restconf^.
 It may be possible to use YANG Patch with other protocols
 besides RESTCONF. This is outside the scope of this document.
 It may be possible to use YANG Patch with datastore
-types other than a configuration datastore.  
+types other than a configuration datastore.
 This is outside the scope of this document.
 
 ** Terminology
@@ -62,7 +62,7 @@ The following terms are defined in ^RFC7231^:
 
 *** YANG
 
-The following terms are defined in ^I-D.ietf-netmod-rfc6020bis^:
+The following terms are defined in ^RFC7950^:
 
 - container
 - data node
@@ -75,7 +75,7 @@ The following terms are defined in ^I-D.ietf-netmod-rfc6020bis^:
 
 The following terms are defined in ^I-D.ietf-netconf-restconf^:
 
-- application/yang-data
+- application/yang-data-xml
 - application/yang-data+json
 - data resource
 - datastore resource
@@ -101,7 +101,7 @@ either the media type "application/yang-patch-xml" or "application/yang-patch+js
 the YANG "yang-patch-status" YANG data template, defined in ^module^.
 In HTTP, refers to a response message for a PATCH method,
 where it has a representation with either the media type
-"application/yang-data" or "application/yang-data+json".
+"application/yang-data-xml" or "application/yang-data+json".
 
 - YANG Patch template: this is similar to a YANG data template, except
 it has a representation with the media type "application/yang-patch-xml"
@@ -171,8 +171,8 @@ which includes the media type for YANG Patch.
 Note that YANG Patch can only edit data resources.
 The PATCH method cannot be used to replace the datastore resource.
 Although the "ietf-yang-patch" YANG module is written using
-YANG 1.1 ^I-D.ietf-netmod-rfc6020bis^, an implementation
-of YANG Patch can be used with content defined in YANG 1.0 ^RFC6020^
+YANG version 1.1 ^RFC7950^, an implementation
+of YANG Patch can be used with content defined in YANG version 1 ^RFC6020^
 as well.
 
 
@@ -183,18 +183,18 @@ Example:
 A YANG Patch can be encoded in XML format according
 to ^W3C.REC-xml-20081126^. It can also be encoded in
 JSON, according to "JSON Encoding of Data Modeled with YANG"
-^I-D.ietf-netmod-yang-json^.  If any meta-data needs to
+^RFC7951^.  If any meta-data needs to
 be sent in a JSON message, it is encoded according
-to "Defining and Using Metadata with YANG" ^I-D.ietf-netmod-yang-metadata^.
+to "Defining and Using Metadata with YANG" ^RFC7952^.
 
 ** Target Resource
 
 The YANG Patch operation uses the RESTCONF target resource URI
 to identify the resource that will be patched.
-This can be the datastore resource itself, i.e.,  "{+restconf}/data",
+This can be the datastore resource itself, i.e., "{+restconf}/data",
 to edit top-level configuration data resources,
 or it can be a configuration data resource within the
-datastore resource, e.g., "{+restconf/data/ietf-interfaces:interfaces",
+datastore resource, e.g., "{+restconf}/data/ietf-interfaces:interfaces",
 to edit sub-resources within a top-level configuration
 data resource.
 
@@ -402,16 +402,13 @@ registry ^RFC6020^.
 
    Optional parameters: None
 
-  // RFC Ed.: replace draft-ietf-netmod-rfc6020bis with
-  // the actual RFC reference for YANG 1.1, and remove this note.
-
   // RFC Ed.: replace 'XXXX' with the real RFC number,
   // and remove this note
 
    Encoding considerations: 8-bit
       Each conceptual YANG data node is encoded according to the
       XML Encoding Rules and Canonical Format for the specific
-      YANG data node type defined in [draft-ietf-netmod-rfc6020bis].
+      YANG data node type defined in [RFC7950].
       In addition, the "yang-patch" YANG Patch template found
       in [RFCXXXX] defines the structure of a YANG Patch request.
 
@@ -575,7 +572,7 @@ This document registers one capability identifier in
 
 
 * Security Considerations
-  
+
 The YANG Patch media type does not introduce any significant
 new security threats, beyond what is described in
 ^I-D.ietf-netconf-restconf^.
@@ -843,7 +840,7 @@ Request from the RESTCONF client:
    PATCH /restconf/data/example-jukebox:jukebox/\
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
    Host: example.com
-   Accept: application/yang-data
+   Accept: application/yang-data-xml
    Content-Type: application/yang-patch-xml
 
    <yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
@@ -895,7 +892,7 @@ XML Response from the RESTCONF server:
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang-data
+   Content-Type: application/yang-data-xml
 
    <yang-patch-status
       xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
@@ -1080,7 +1077,7 @@ The operation succeeds, so a non-error reply example can be shown.
    Content-Type: application/yang-data+json
 
    {
-     "ietf-restconf:yang-patch-status" : {
+     "ietf-yang-patch:yang-patch-status" : {
        "patch-id" : "move-song-patch",
        "ok" : [null]
      }
@@ -1201,7 +1198,7 @@ Response from the RESTCONF server:
    Content-Type: application/yang-data+json
 
    {
-     "ietf-restconf:yang-patch-status" : {
+     "ietf-yang-patch:yang-patch-status" : {
        "patch-id" : "datastore-patch-1",
        "ok" : [null]
      }
