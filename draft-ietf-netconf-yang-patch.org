@@ -198,6 +198,11 @@ datastore resource, e.g., "{+restconf/data/ietf-interfaces:interfaces",
 to edit sub-resources within a top-level configuration
 data resource.
 
+The target resource MUST identify exactly one resource instance.
+and this resource instance MUST already exist on the server.
+Otherwise the request MUST NOT be processed, and
+a "400 Bad Request" error response MUST be sent by the server.
+
 Each edit with a YANG Patch identifies a target data node
 for the associated edit. This is described in ^target-data-node^.
 
@@ -623,6 +628,11 @@ The Space & Terrestrial Communications Directorate (S&TCD).
 The YANG Patch issue tracker can be found here:
 https://github.com/netconf-wg/yang-patch/issues
 
+** v11 to v12
+
+- clarify target resource must exist
+- fix errors in some examples
+
 ** v10 to v11
 
 - change application/yang-patch to application/yang-patch-xml
@@ -830,7 +840,7 @@ since the first edit failed.  The XML encoding is used in this example.
 
 Request from the RESTCONF client:
 
-   PATCH /restconf/data/example-jukebox:jukebox/
+   PATCH /restconf/data/example-jukebox:jukebox/\
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
    Host: example.com
    Accept: application/yang-data
@@ -965,8 +975,8 @@ an existing album.
 
 Request from the RESTCONF client:
 
-   PATCH /restconf/data/example-jukebox:jukebox/
-      library/artist=Foo%20Fighters/album=Wasting%20Light
+   PATCH /restconf/data/example-jukebox:jukebox/\
+      library/artist=Foo%20Fighters/album=Wasting%20Light \
       HTTP/1.1
    Host: example.com
    Accept: application/yang-data+json
@@ -1008,7 +1018,7 @@ Request from the RESTCONF client:
 
 Response from the RESTCONF server:
 
-   HTTP/1.1 200 Success
+   HTTP/1.1 200 OK
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
@@ -1031,8 +1041,8 @@ The operation succeeds, so a non-error reply example can be shown.
 
  Request from the RESTCONF client:
 
-   PATCH /restconf/data/example-jukebox:jukebox/
-     playlist=Foo-One   HTTP/1.1
+   PATCH /restconf/data/example-jukebox:jukebox/\
+     playlist=Foo-One HTTP/1.1
    Host: example.com
    Accept: application/yang-data+json
    Content-Type: application/yang-patch+json
@@ -1063,7 +1073,7 @@ The operation succeeds, so a non-error reply example can be shown.
 
  Response from the RESTCONF server:
 
-   HTTP/1.1 400 OK
+   HTTP/1.1 200 OK
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
@@ -1088,8 +1098,8 @@ The operation succeeds, so a non-error reply example can be shown.
 
 Request from the RESTCONF client:
 
-   PATCH /restconf/data/example-jukebox:jukebox/
-     playlist=Foo-One   HTTP/1.1
+   PATCH /restconf/data/example-jukebox:jukebox/\
+     playlist=Foo-One HTTP/1.1
    Host: example.com
    Accept: application/yang-data+json
    Content-Type: application/yang-patch+json
@@ -1112,7 +1122,7 @@ Request from the RESTCONF client:
 
 Response from the RESTCONF server:
 
-   HTTP/1.1 400 OK
+   HTTP/1.1 200 OK
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
@@ -1137,7 +1147,7 @@ Example module "baz" defines list Z, with key C and child leafs D and E.
 
 Request from the RESTCONF client:
 
-   PATCH /restconf/data  HTTP/1.1
+   PATCH /restconf/data HTTP/1.1
    Host: example.com
    Accept: application/yang-data+json
    Content-Type: application/yang-patch+json
@@ -1184,7 +1194,7 @@ Request from the RESTCONF client:
 
 Response from the RESTCONF server:
 
-   HTTP/1.1 400 OK
+   HTTP/1.1 200 OK
    Date: Mon, 23 Apr 2012 13:02:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
