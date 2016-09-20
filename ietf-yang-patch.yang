@@ -163,10 +163,10 @@ module ietf-yang-patch {
           type enumeration {
             enum create {
               description
-                "The target data node is created using the
-                 supplied value, only if it does not already
-                 exist.get' leaf identifies the data node to be
-                 created, not the parent data node.";
+                "The target data node is created using the supplied
+                 value, only if it does not already exist. The
+                 'target' leaf identifies the data node to be created,
+                 not the parent data node.";
             }
             enum delete {
               description
