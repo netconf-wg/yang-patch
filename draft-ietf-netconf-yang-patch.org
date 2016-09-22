@@ -199,9 +199,13 @@ to edit sub-resources within a top-level configuration
 data resource.
 
 The target resource MUST identify exactly one resource instance.
-and this resource instance MUST already exist on the server.
-Otherwise the request MUST NOT be processed, and
+If more than one resource instance is identified, then
+the request MUST NOT be processed, and
 a "400 Bad Request" error response MUST be sent by the server.
+If the target resource does not identify any existing
+resource instance then
+the request MUST NOT be processed, and
+a "404 Not Found" error response MUST be sent by the server.
 
 Each edit with a YANG Patch identifies a target data node
 for the associated edit. This is described in ^target-data-node^.
@@ -638,7 +642,7 @@ https://github.com/netconf-wg/yang-patch/issues
 - clarified that YANG 1.0 content can be used in a YANG Patch
 implementation
 - clarified more terminology
-- fixed missing keys in edit exmaples
+- fixed missing keys in edit examples
 - added insert list example
 
 
