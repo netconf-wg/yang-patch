@@ -75,7 +75,7 @@ The following terms are defined in ^RFC7950^:
 
 The following terms are defined in ^I-D.ietf-netconf-restconf^:
 
-- application/yang-data-xml
+- application/yang-data+xml
 - application/yang-data+json
 - data resource
 - datastore resource
@@ -95,16 +95,16 @@ The following terms are used within this document:
 - YANG Patch: a conceptual edit request using the "yang-patch"
 YANG Patch template, defined in ^module^.
 In HTTP, refers to a PATCH method where a representation uses
-either the media type "application/yang-patch-xml" or "application/yang-patch+json".
+either the media type "application/yang-patch+xml" or "application/yang-patch+json".
 
 - YANG Patch Status: a conceptual edit status response using
 the YANG "yang-patch-status" YANG data template, defined in ^module^.
 In HTTP, refers to a response message for a PATCH method,
 where it has a representation with either the media type
-"application/yang-data-xml" or "application/yang-data+json".
+"application/yang-data+xml" or "application/yang-data+json".
 
 - YANG Patch template: this is similar to a YANG data template, except
-it has a representation with the media type "application/yang-patch-xml"
+it has a representation with the media type "application/yang-patch+xml"
 or "application/yang-patch+json".
 
 *** Examples @examples@
@@ -141,7 +141,7 @@ are defined in the YANG module in ^module^.
 
 The YANG Patch operation is invoked
 by the RESTCONF client by sending a PATCH method request with
-a representation using either the "application/yang-patch-xml"
+a representation using either the "application/yang-patch+xml"
 or "application/yang-patch+json" media type. A message-body representing the
 YANG Patch input parameters MUST be provided.
 
@@ -178,7 +178,7 @@ as well.
 
 Example:
 
-  Accept-Patch: application/yang-patch-xml,application/yang-patch+json
+  Accept-Patch: application/yang-patch+xml,application/yang-patch+json
 
 A YANG Patch can be encoded in XML format according
 to ^W3C.REC-xml-20081126^. It can also be encoded in
@@ -396,7 +396,7 @@ registry ^RFC6020^.
 ** Media Types @media-types@
 
 
-*** Media Type application/yang-patch-xml @yang-patch-xml@
+*** Media Type application/yang-patch+xml @yang-patch-xml@
 
    Type name: application
 
@@ -444,8 +444,8 @@ registry ^RFC6020^.
      data parsers used within a protocol or automation tool
      that utilize the YANG Patch data structure.
 
-   Fragment identifier considerations: The fragment field in the
-      request URI has no defined purpose.
+   Fragment identifier considerations: Fragment identifiers
+      for this type are not defined.
 
    Additional information:
 
@@ -633,6 +633,7 @@ https://github.com/netconf-wg/yang-patch/issues
 
 - clarify target resource must exist
 - fix errors in some examples
+- change application/yang-patch-xml to application/yang-patch+xml
 
 ** v10 to v11
 
@@ -844,8 +845,8 @@ Request from the RESTCONF client:
    PATCH /restconf/data/example-jukebox:jukebox/\
       library/artist=Foo%20Fighters/album=Wasting%20Light HTTP/1.1
    Host: example.com
-   Accept: application/yang-data-xml
-   Content-Type: application/yang-patch-xml
+   Accept: application/yang-data+xml
+   Content-Type: application/yang-patch+xml
 
    <yang-patch xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
      <patch-id>add-songs-patch</patch-id>
@@ -896,7 +897,7 @@ XML Response from the RESTCONF server:
    Date: Mon, 23 Apr 2012 13:01:20 GMT
    Server: example-server
    Last-Modified: Mon, 23 Apr 2012 13:01:20 GMT
-   Content-Type: application/yang-data-xml
+   Content-Type: application/yang-data+xml
 
    <yang-patch-status
       xmlns="urn:ietf:params:xml:ns:yang:ietf-yang-patch">
