@@ -117,7 +117,7 @@ considered to be joined to the next line by deleting the
 backslash, the following line break,
 and the leading whitespace of the next line.
 
-*** Tree Diagrams
+*** Tree Diagram Notations
 
 A simplified graphical representation of the data model is used in
 this document.  The meaning of the symbols in these
@@ -210,7 +210,7 @@ a "404 Not Found" error response MUST be sent by the server.
 Each edit with a YANG Patch identifies a target data node
 for the associated edit. This is described in ^target-data-node^.
 
-** yang-patch Input
+** yang-patch Request
 
 A YANG patch is optionally identified by a unique "patch-id" and it
 may have an optional comment.  A patch is an ordered collection of
@@ -223,6 +223,30 @@ parameter indicates how the node is inserted or moved.
 For values "before" and "after", the "point" parameter
 specifies the data node insertion point.
 
+The merge, replace, create, delete, and remove edit operations
+have the exact same meaning
+as defined for the "operation" attribute in section 7.2 of ^RFC6241^.
+
+Each edit within a YANG Patch MUST identify exactly one data
+resource instance.
+If an edit represents more than one resource instance, then
+the request MUST NOT be processed, and
+a "400 Bad Request" error response MUST be sent by the server.
+If the edit does not identify any existing resource instance,
+and the operation for the edit is not "create", then
+the request MUST NOT be processed, and
+a "404 Not Found" error response MUST be sent by the server.
+A "yang-patch-status" response MUST be sent by the server identifying
+the edit(s) that are not valid.
+
+YANG Patch does not provide any access to specific datastores.
+It is am implementation detail how a server processes an edit
+if it is co-located with a NETCONF server that does provide
+access to individual datastores. A complete datastore cannot
+be replaced in the same manner as provided by
+the "copy-config" operation defined in section 7.3 of ^RFC6241^.
+Only the specified nodes in a YANG Patch are affected.
+
 A message-body representing the YANG Patch is sent
 by the RESTCONF client to specify the edit operation request.
 When used with the HTTP PATCH method, this data is identified
@@ -231,7 +255,7 @@ by the YANG Patch media type.
 YANG tree diagram for "yang-patch" Container
 
   +---- yang-patch
-        +---- patch-id?   string
+        +---- patch-id    string
         +---- comment?    string
         +---- edit* [edit-id]
            +---- edit-id?     string
@@ -242,7 +266,7 @@ YANG tree diagram for "yang-patch" Container
            +---- value?
 
 
-** yang-patch-status Output
+** yang-patch-status Response
 
 A message-body representing the YANG Patch Status is returned
 to the RESTCONF client to report the detailed status of the edit operation.
@@ -369,7 +393,7 @@ is used by this module for the 'yang-data' extension definition.
 RFC Ed.: update the date below with the date of RFC publication and
 remove this note.
 
-!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-08-15.yang"
+!! include-figure ietf-yang-patch.yang extract-to="ietf-yang-patch@2016-09-26.yang"
 
 * IANA Considerations @iana@
 
@@ -634,6 +658,10 @@ https://github.com/netconf-wg/yang-patch/issues
 - clarify target resource must exist
 - fix errors in some examples
 - change application/yang-patch-xml to application/yang-patch+xml
+- clarified some section titles
+- clarified error responses for multiple edit instances
+- made patch-id field mandatory
+- referenced NETCONF operation attribute
 
 ** v10 to v11
 

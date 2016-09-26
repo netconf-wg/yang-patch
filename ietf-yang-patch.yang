@@ -51,7 +51,7 @@ module ietf-yang-patch {
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2016-08-15 {
+  revision 2016-09-26 {
     description
       "Initial revision.";
     reference
@@ -115,6 +115,7 @@ module ietf-yang-patch {
 
       leaf patch-id {
         type string;
+        mandatory true;
         description
           "An arbitrary string provided by the client to identify
            the entire patch.  Error messages returned by the server
