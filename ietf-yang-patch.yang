@@ -47,11 +47,11 @@ module ietf-yang-patch {
   // note.
 
   // RFC Ed.: remove this note
-  // Note: extracted from draft-ietf-netconf-yang-patch-12.txt
+  // Note: extracted from draft-ietf-netconf-yang-patch-13.txt
 
   // RFC Ed.: update the date below with the date of RFC publication
   // and remove this note.
-  revision 2016-09-26 {
+  revision 2016-11-09 {
     description
       "Initial revision.";
     reference
@@ -111,7 +111,7 @@ module ietf-yang-patch {
          be reported in the reply message.";
 
       reference
-        "draft-ietf-netmod-rfc6020bis, section 8.3.";
+        "RFC 7950, section 8.3.";
 
       leaf patch-id {
         type string;
@@ -120,7 +120,10 @@ module ietf-yang-patch {
           "An arbitrary string provided by the client to identify
            the entire patch.  Error messages returned by the server
            pertaining to this patch will be identified by this
-           patch-id value.";
+           patch-id value. A client SHOULD attempt to generate
+           unique patch-id values to distinguish between transactions
+           from multiple clients in any audit logs maintained
+           by the server.";
       }
 
       leaf comment {

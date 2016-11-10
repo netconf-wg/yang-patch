@@ -205,12 +205,12 @@ This document describes an IANA maintained registry for IETF standards which use
       <author initials="K." surname="Watsen" fullname="K. Watsen">
 	<organization>Juniper Networks</organization>
       </author>
-      <date year="2016" month="April"/>
+      <date year="2016" month="October" day="27" />
     </front>
     <seriesInfo name="Internet-Draft"
-                value="draft-ietf-netconf-restconf-13"/>
+                value="draft-ietf-netconf-restconf-18"/>
     <format type='TXT'
-    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-13.txt'/>
+    target='http://www.ietf.org/id/draft-ietf-netconf-restconf-18.txt'/>
 </reference>
 <!-- END RESTCONF -->
 
