@@ -454,6 +454,7 @@ registry ^RFC6020^.
   // and remove this note
 
    Encoding considerations: 8-bit
+      The utf-8 charset is always used for this type
       Each conceptual YANG data node is encoded according to the
       XML Encoding Rules and Canonical Format for the specific
       YANG data node type defined in [RFC7950].
@@ -539,6 +540,7 @@ registry ^RFC6020^.
   // and remove this note
 
    Encoding considerations: 8-bit
+      The utf-8 charset is always used for this type.
       Each conceptual YANG data node is encoded according to
       [draft-ietf-netmod-yang-json]. A data annotation is
       encoded according to [draft-ietf-netmod-yang-metadata]
@@ -625,6 +627,9 @@ new security threats, beyond what is described in
 ^I-D.ietf-netconf-restconf^.
 This document defines edit processing instructions for a
 variant of the PATCH method, as used within the RESTCONF protocol.
+Message integrity is provided by the RESTCONF protocol.
+There is no additional capability to validate that a patch
+has not been altered.
 
 It may be possible to use YANG Patch with other protocols
 besides RESTCONF, which is outside the scope of this document.
