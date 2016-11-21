@@ -454,7 +454,7 @@ registry ^RFC6020^.
   // and remove this note
 
    Encoding considerations: 8-bit
-      The utf-8 charset is always used for this type
+      The utf-8 charset is always used for this type.
       Each conceptual YANG data node is encoded according to the
       XML Encoding Rules and Canonical Format for the specific
       YANG data node type defined in [RFC7950].
@@ -1056,12 +1056,14 @@ Request from the RESTCONF client:
            "operation" : "create",
            "target" : "/song=Rope",
            "value" : {
-             "song" : {
-               "name" : "Rope",
-               "location" : "/media/rope.mp3",
-               "format" : "MP3",
-               "length" : 259
-             }
+             "song" : [
+               {
+                 "name" : "Rope",
+                 "location" : "/media/rope.mp3",
+                 "format" : "MP3",
+                 "length" : 259
+               }
+             ]
            }
          },
          {
@@ -1069,12 +1071,14 @@ Request from the RESTCONF client:
            "operation" : "create",
            "target" : "/song=Dear%20Rosemary",
            "value" : {
-             "song" : {
-               "name" : "Dear Rosemary",
-               "location" : "/media/dear_rosemary.mp3",
-               "format" : "MP3",
-               "length" : 269
-             }
+             "song" : [
+               {
+                 "name" : "Dear Rosemary",
+                 "location" : "/media/dear_rosemary.mp3",
+                 "format" : "MP3",
+                 "length" : 269
+               }
+             ]
            }
          }
        ]
